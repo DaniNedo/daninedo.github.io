@@ -23,11 +23,13 @@ following specs:
 - 16 GPIOs
 
 Together with it we sould get the Datasheet and the Reference Manual. Those are
-indispensable files for being able to program the micro.
+indispensable files for being able to program the microcontroller and I would recommend
+having them on hand during the reading.
 
 ## Pointers
 Ha! Did you think we could get by without these bad boys? Well no. As a quick summary
-the memory is organized in blocks (in this case 8 bit wide) where information can be stored,
+the memory is organized in blocks, commonly know as [registers]
+(https://en.wikipedia.org/wiki/Hardware_register), where information can be stored,
 each of this blocks is identified by an address:
 
 | Address | Value |
@@ -36,10 +38,23 @@ each of this blocks is identified by an address:
 | 0x01 | 0x00 |
 | 0x02 | 0x0A |
 
-A pointer is a coding element that stores the address of another element in its value field,
-essentially it points to its address. For example:
+A pointer is a coding element that stores the address of a register in its value field,
+essentially it points to its address. Pointers can also be dereferenced to access the values
+stored in that register, e.g.
 ```
 uint8_t var = 0xD3; // var stores 0xD3
 uint8_t *ptr = &var; // ptr stores var's address
 *ptr = 0x0C // var now stores 0x0C
 ```
+
+## Memory
+When programming we don't usually know what memory addresses are used, and we don't really
+care as long as everything is inside the proper boundries. However, to interact with the
+hardware we actually need to know "some" specific memory addresses to access the so called
+Special Function Registers (SFR). This registers are presented in the datasheet and
+explained in detail in the reference manual.
+
+In the page 30 of our target microcontroller's datasheet the memory map is shown, and we
+can see that the SFR addresses for the GPIO and peripherials go from 0x005000 up to 0x0057FF:
+
+![Memory map](/img/gpiomemorymap.jpg){: .center-block width="50%" :}
