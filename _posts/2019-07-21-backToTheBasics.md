@@ -15,9 +15,9 @@ typing some lines of code and blinking some LEDs!
 ## The STM8S003F3P6
 We are going to use the STM8S003F3P6, a value line 8-bit microcontroller with the
 following specs:
-- 8Kb of flash memory
-- 1Kb of RAM
-- 128b of EEPROM
+- 8 KB of flash memory
+- 1 KB of RAM
+- 128 KB of EEPROM
 - Hardware I2C, UART & SPI
 - 10 bit ADC
 - 16 GPIOs
@@ -28,9 +28,8 @@ having them on hand during the reading.
 
 ## Pointers
 Ha! Did you think we could get by without these bad boys? Well no. As a quick summary
-the memory is organized in blocks, commonly know as [registers]
-(https://en.wikipedia.org/wiki/Hardware_register), where information can be stored,
-each of this blocks is identified by an address:
+the memory is organized in blocks, commonly know as [registers](https://en.wikipedia.org/wiki/Hardware_register),
+where information can be stored, each of this blocks is identified by an address:
 
 | Address | Value |
 | :------ | :---- |
@@ -55,6 +54,6 @@ Special Function Registers (SFR). This registers are presented in the datasheet 
 explained in detail in the reference manual.
 
 In the page 30 of our target microcontroller's datasheet the memory map is shown, and we
-can see that the SFR addresses for the GPIO and peripherials go from 0x005000 up to 0x0057FF:
+can see that the SFR addresses for GPIO and peripherials go from 0x005000 up to 0x0057FF:
 
 ![Memory map](/img/gpiomemorymap.jpg){: .center-block width="50%" :}
