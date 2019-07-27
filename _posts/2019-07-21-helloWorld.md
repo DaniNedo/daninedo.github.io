@@ -86,7 +86,7 @@ to write to code:
 2. Look in the datasheet and ref. manual for the proper register addresses
 3. Write the firmware
 
-### Blinking an LED
+## Blinking an LED
 For our first program we are going to flash the built-in LED on the STM8 blue pill.
 In the image below the pinout of the breakout board is showed:
 
@@ -98,8 +98,8 @@ More information about the GPIO can be found in the datasheet (page 25):
 
 We need to pay attention to the bottom note: Pins marked with a "T" are
 true open drain, and there's no protection diode to VDD nor P-Buffer implemented.
-What this means is that the pin state can only be Low (connected to VSS) or floating
-(high impedance) and we need be extra carefull with the voltage applied to them.
+What this means is that the pin state can only be Low (connected to GND) or floating
+(high impedance) and we need to be extra carefull with the voltage applied to them.
 
 ![STM8 GPIO Implementation](/img/gpioblockdiagram.JPG){: .center-block width="90%" :}
 
@@ -110,3 +110,22 @@ following this circuit:
 
 PB5 happens to be a true open drain pin, but it is fine because the LED is tied to
 3.3V so pulling the pin low will turn it on.
+
+### GPIO registers
+GPIO have various configuration options that can be set through these registers:
+- Data Direction Register (DDR)
+- Control Register (CR1 & CR2)
+- Output Data Register (ODR)
+- Input Data Register (IDR)
+We need to setup PB5 as an open drain output. In the user manual (page 107) all the
+posible configurations are presented:
+
+![Port configuration](/img/portconfig.JPG){: .center-block width="90%" :}
+
+As you can see, we just have to set to 1 the proper DDR bit, because PB5 just supports
+open drain mode as an output.
+
+Checking again the datasheet (page 31) and the ref. manual (page 111) we can find
+the addresses for the necesary registers:
+
+![Port B](/img/porb.JPG){: .center-block width="90%" :}
