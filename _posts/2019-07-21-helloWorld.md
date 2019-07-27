@@ -117,15 +117,15 @@ GPIO have various configuration options that can be set through these registers:
 - Control Register (CR1 & CR2)
 - Output Data Register (ODR)
 - Input Data Register (IDR)
-We need to setup PB5 as an open drain output. In the user manual (page 107) all the
-posible configurations are presented:
+We need to setup PB5 as an open drain output. In the reference manual (page 107) 
+all the posible configurations are presented:
 
 ![Port configuration](/img/portconfig.JPG){: .center-block width="90%" :}
 
 As you can see, we just have to set to 1 the proper DDR bit, because PB5 just supports
 open drain mode as an output.
 
-Checking again the datasheet (page 31) and the ref. manual (page 111) we can find
+Checking again the datasheet (page 31) and the reference manual (page 111) we can find
 the addresses for the necesary registers:
 
-![Port B](/img/porb.JPG){: .center-block width="90%" :}
+![Port B](/img/portb.JPG){: .center-block width="90%" :}
