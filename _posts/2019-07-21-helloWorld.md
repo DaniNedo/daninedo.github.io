@@ -77,8 +77,8 @@ can see that the SFR addresses for GPIO and peripherials go from 0x005000 up to 
 ![Memory map](/img/gpiomemorymap.jpg){: .center-block width="50%" :}
 
 In the following pages, we can see a list of the different registers and their addresses
-and a brief explanation of their purpose. In the reference manual, more detailed
-information can be found about each one.
+and a summary of their purpose. In the reference manual, a more detailed
+explanation can be found about each one.
 
 As you will see through the different examples the same procedure will be followed
 to write to code:
@@ -86,11 +86,27 @@ to write to code:
 2. Look in the datasheet and ref. manual for the proper register addresses
 3. Write the firmware
 
-###Blinking an LED
+### Blinking an LED
 For our first program we are going to flash the built-in LED on the STM8 blue pill.
 In the image below the pinout of the breakout board is showed:
 
 ![STM8 Blue Pill Pinout](/img/stm8blue.png){: .center-block width="50%" :}
 
-The built-in LED is connected to the pin D3 of the board and to the fifth pin of the
-Port B (PB5) on the microcontroller.
+More information about the GPIO can be found in the datasheet (page 25):
+
+![STM8 TSSOP20 Pinout](/img/pinout.jpg){: .center-block width="90%" :}
+
+We need to pay attention to the bottom note: Pins marked with a "T" are
+true open drain, and there's no protection diode to VDD nor P-Buffer implemented.
+What this means is that the pin state can only be Low (connected to VSS) or floating
+(high impedance) and we need be extra carefull with the voltage applied to them.
+
+![STM8 GPIO Implementation](/img/gpioblockdiagram.jpg){: .center-block width="90%" :}
+
+The built-in LED is connected to the fifth pin of the Port B (PB5) on the microcontroller,
+following this circuit:
+
+![Built-in LED Circuit](/img/leddiagram.jpg){: .center-block width="50%" :}
+
+PB5 happens to be a true open drain pin, but it is fine because the LED is tied to
+3.3V so pulling the pin low will turn it on.
