@@ -9,20 +9,20 @@ comments: true
 ---
 
 I wanted learn how to program an STM8 on a Windows machine, however the majority
-of the tutorials I have found were for the UNIX world, so I decided to write some
+of the tutorials I have found were for the Unix world, so I decided to write some
 articles explaining how to setup your Windows PC to be able to program SMT8 and
 other microcontrollers painlessly.
 
 Before you tell me to go and buy a Mac or a Think Pad with Linux, I want to say
 that at the moment of writing this article I only had my trusty Toshiba laptop running
 on Windows and did't want to spend money on a new computer or deal with dual booting.
-Even if the Internet is pushing you to use UNIX for this kind of applications,
+Even if the Internet is pushing you to use Unix for this kind of applications,
 I think is fine to get the most of the tools you have in order to learn, letting
 performance and other criteria aside.
 
-Finally, even if you do have a machine with UNIX OS, you can still follow the
+Finally, even if you do have a machine with Unix OS, you can still follow the
 articles if you want to learn how to program an STM8, I will link tutorials for
-UNIX OS when needed.
+Unix OS when needed.
 
 
 ## Background
@@ -68,7 +68,7 @@ to many things to digest when you are just starting, but maybe it was only me.
 Fortunately, one day I found this
 [exquisit tutorial](https://lujji.github.io/blog/bare-metal-programming-stm8/)
 on which these articles are based. Although the author was using some tools for
-UNIX it was really easy to comprenhend what tools were needed. The approach of
+Unix it was really easy to comprenhend what tools were needed. The approach of
 using independent tools for writing, compiling and flashing allows understand
 better what is happening at the different stages of programming the microcontrollers.
 
@@ -77,24 +77,24 @@ So, as listed before you will need the following software:
 - [Small Device C Compiler](http://sdcc.sourceforge.net/) (SDCC)
 and [Make](https://sourceforge.net/projects/gnuwin32/).
 - [ST Visual Programmer](https://www.st.com/en/development-tools/stvp-stm32.html),
-for UNIX you can use [STM8Flash](https://github.com/vdudouyt/stm8flash).
+for Unix you can use [STM8Flash](https://github.com/vdudouyt/stm8flash).
 
 ### Installing SDCC
-SDCC is downloadable from [here](https://sourceforge.net/projects/sdcc/files/).
+I said that we are going to do all this on Windows, but I lied...SDCC is GNU tool
+that with some magic help from [MINGW](http://www.mingw.org/) works on Windows as
+well (you don't have to install MINGW directly). SDCC is downloadable 
+from [here](https://sourceforge.net/projects/sdcc/files/).
 Get the latest version suitable for your machine and follow the instructions of
 the installer. After the installation you have to add SDCC to your machine's Path,
 You can check if it is correctly installed typing `SDCC --version` in the CMD, and
 you will see the version of the software.
 
 ### Installing Make
-This is where things get tricky. I said that we are going to do all this on Windows,
-but I lied... Make is not an indispensable tool, but very useful, we will see it
-later. Although its designed for UNIX systems with some magic help from
-[MINGW](http://www.mingw.org/) the tool works on Windows as well, and can be
-downloaded [here](https://sourceforge.net/projects/gnuwin32/). If you prefer to
-download the [complete version](https://osdn.net/projects/mingw/releases/)
+Make is not an indispensable tool, but very useful, we will see it later.
+It is also a GNU tool, but can be downloaded from [here](https://sourceforge.net/projects/gnuwin32/).
+If you prefer to download the [complete version](https://osdn.net/projects/mingw/releases/)
 of MINGW, Make also comes with it. Download the Installation Manager and select
-_Basic Setup_ Make will be included in the installation. I tried both options and
+_Basic Setup_, Make will be included in the installation. I tried both options and
 both worked for me. Don't forget to add Make to the Path! Again you can check if
 all went good typing `Make --version`.
 
@@ -105,9 +105,8 @@ to provide your email when downloading. Eventhough it is called Visual Programme
 and comes with a Graphical User Interface (GUI) it also comes with a Command
 Line Interface (CLI), it took me 8 months to realize that and search for the CLI
 in the folder, don't repeat my mistakes... Anyway, be sure to add the folder that contains
-the CLI to the Path, usually it is `C:\Program Files (x86)\STMicroelectronics\st_toolset\stvp`
-and verify the installation typing `STVP_CmdLine -version` There's also another
-tool from ST called [ST-LINK utility](https://www.st.com/en/development-tools/stsw-link004.html)
+the CLI to the Path, and verify the installation typing `STVP_CmdLine -version`.
+There's also another tool from ST called [ST-LINK utility](https://www.st.com/en/development-tools/stsw-link004.html)
 but is is useful only for STM32.
 
 Slap yourself on the back because you successfully installed all the necessary
