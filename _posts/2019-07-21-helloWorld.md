@@ -4,7 +4,7 @@ title: Hello, World! on the STM8
 subtitle: The bare metal approach
 gh-repo: daninedo/stm8
 gh-badge: [star, fork, follow]
-tags: [STM, SMT8, SMT8S003F3, SDCC, C]
+tags: [STM, SMT8, SMT8S, SDCC, C, Hello World]
 comments: true
 ---
 
@@ -12,7 +12,7 @@ If you have read the last article you should have everything ready to start prog
 STM8, if not I strongly recommend going through it. This time we will be finally
 typing some lines of code and blinking some LEDs!
 
-## The STM8S003F3P6
+## The STM8S
 I'm going to use the STM8S003F3P6, a value line 8-bit microcontroller with the
 following specs:
 - 8 KB of flash memory
@@ -24,9 +24,9 @@ following specs:
 
 {: .box-note}
 **Note:** It is not a very recommended microcontroller for development because it is only
-guaranteed to work for up to 100 flash cycles, but it is the one that I have around.
-If you need to buy one I suggest you to get the STM8S103F3P6 instead, it supports
-up to 10000 flash cycles and you can find it with the same breakout board.
+guaranteed to work for up to 100 flash cycles. If you need to buy one I suggest you 
+to get the STM8S103F3P6 instead, it supports up to 10000 flash cycles and you can
+find it with the same breakout board.
 
 Together with it we sould get the Datasheet and the Reference Manual. Those are
 indispensable files for being able to program the microcontroller and I would recommend
@@ -53,7 +53,7 @@ where information can be stored, each of this blocks is identified by an address
 | :------ | :---- |
 | 0x00 | 0xFF |
 | 0x01 | 0x00 |
-| 0x02 | 0x0A |
+| 0x02 | 0x0A |{: .center-block :}
 
 A pointer is a coding element that stores the address of a register in its value field,
 essentially it points to its address. Pointers can also be dereferenced to access the values
@@ -72,16 +72,15 @@ Special Function Registers (SFR). This registers are presented in the datasheet 
 explained in detail in the reference manual.
 
 In the page 30 of our target microcontroller's datasheet the memory map is shown, and we
-can see that the SFR addresses for GPIO and peripherials go from 0x005000 up to 0x0057FF:
+can see that the SFR addresses for GPIO and peripherials go from `0x005000` up to `0x0057FF`:
 
 ![Memory map](/img/gpiomemorymap.jpg){: .center-block width="50%" :}
 
-In the following pages, we can see a list of the different registers and their addresses
+In the next pages, we can see a list of the different registers and their addresses
 and a summary of their purpose. In the reference manual, a more detailed
 explanation can be found about each one.
 
-As you will see through the different examples the same procedure will be followed
-to write to code:
+For different examples the same procedure will be followed to write to code:
 1. Identify the needed hardware
 2. Look in the datasheet and ref. manual for the proper register addresses
 3. Write the firmware
@@ -117,15 +116,68 @@ GPIO have various configuration options that can be set through these registers:
 - Control Register (CR1 & CR2)
 - Output Data Register (ODR)
 - Input Data Register (IDR)
+
 We need to setup PB5 as an open drain output. In the reference manual (page 107) 
 all the posible configurations are presented:
 
 ![Port configuration](/img/portconfig.JPG){: .center-block width="90%" :}
 
-As you can see, we just have to set to 1 the proper DDR bit, because PB5 just supports
-open drain mode as an output.
+We just have to set to 1 the proper DDR bit, because PB5 just supports open drain mode
+as an output.
 
 Checking again the datasheet (page 31) and the reference manual (page 111) we can find
-the addresses for the necesary registers:
+the addresses for the necessary registers:
 
 ![Port B](/img/portb.JPG){: .center-block width="90%" :}
+
+The addresses we are interested in are `0x005000` for `ODR` and `0x005007` for `DDR`.
+
+### The code
+To start with, we need to create a blank main.c file using our prefered text editor.
+I suggest keeping the files organized and using on folder per example. The code 
+for this tutorials is available on [Github](https://github.com/DaniNedo/stm8).
+
+Accessing the registers is done by dereferencing a pointer that points to the desired address:
+```
+#define PB_ODR *(volatile char*)0x5005 
+#define PB_DDR *(volatile char*)0x5007
+```
+The keyword `volatile` indicates the compiler to not optimize that element, this is 
+necessary because the SFR may change during run time by unknown source
+(not known to compiler). Check [this](https://barrgroup.com/Embedded-Systems/How-To/C-Volatile-Keyword)
+for more information. Also notice that we are not defining any variable, for instance,
+whenever we use `PB_ODR` we are actually copying `*(volatile char*)0x5005`.
+
+Next we create the main function and inside we configure the `PB_DDR` to set PB5 as an output.
+```
+void main(){
+  PB_DDR = (1 << 5); // Or 0b00100000 or 0x20
+  ...
+}
+```
+Finally we implement the loop where we toggle the LED pin using bitwise operations:
+```
+while(1){
+  PB_ODR ^= (1 << 5);
+  for(int i = 0; i < 30000; i++){;} // Basic delay
+}
+```
+If you are not familiar with bitwise operations take a look 
+[here](https://stackoverflow.com/questions/47981/how-do-you-set-clear-and-toggle-a-single-bit/47990#47990).
+
+The final code should look something like this:
+```
+#define PB_ODR *(volatile char*)0x5005 
+#define PB_DDR *(volatile char*)0x5007
+
+void main(){
+
+  PB_DDR = (1 << 5);
+  
+  while(1){
+    PB_ODR ^= (1 << 5);
+    for(int i = 0; i < 30000; i++){;}
+  }
+  
+}
+```
