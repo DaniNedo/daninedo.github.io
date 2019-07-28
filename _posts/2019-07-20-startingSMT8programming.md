@@ -4,7 +4,7 @@ title: How to program STM8 microcontrollers
 subtitle: ...on Windows and not die trying.
 gh-repo: daninedo/stm8
 gh-badge: [star, fork, follow]
-tags: [STM, SMT8, SMT8S003F3, SDCC, C, Windows]
+tags: [STM, SMT8, SMT8S SDCC, Make, C, STVP, Windows]
 comments: true
 ---
 
@@ -66,8 +66,9 @@ the filing system seemed odd with lots of misterious files...
 to many things to digest when you are just starting, but maybe it was only me.
 
 Fortunately, one day I found this
-[exquisit tutorial](https://lujji.github.io/blog/bare-metal-programming-stm8/)
-on which these articles are based. Although the author was using some tools for
+[exquisit tutorial](https://lujji.github.io/blog/bare-metal-programming-stm8/) from Lujji.
+These articles inspired on that tutorial and are intended to complement it.
+Although the author was using some tools for
 Unix it was really easy to comprenhend what tools were needed. The approach of
 using independent tools for writing, compiling and flashing allows understand
 better what is happening at the different stages of programming the microcontrollers.
@@ -115,16 +116,19 @@ software and you are ready to do some STM8 programming.
 ## The hardware
 We have plenty of [options](https://www.st.com/en/evaluation-tools/stm8-mcu-eval-boards.html#2)
 to choose from for our hardware, from Dev boards to bare MCUs. I went for the so
-called STM8 blue pill:
+called STM8 blue:
 
 ![STM8s](/img/stm8s.jpg){: .center-block width="50%" :}
 
-This is a cheap dev board built around the STM8S003F3P6 and has a few extra components such
-as a LM1117 3.3V regulator, a reset button, a power LED and a LED conected to one
+This is a cheap dev board built around the STM8S003F3P6 or STM8S103F3P6 and has a few extra components such
+as a ASM1117 3.3V regulator, a reset button, a power LED and a LED conected to one
 of the GPIO. It also comes with breakout pins for easy breadboard prototyping and
 programming.
 
-To program the micro we need a flashing tool, in this case a ST-LINK:
+More information about the board can be found
+[here](https://tenbaht.github.io/sduino/hardware/stm8blue/).
+
+To program the micro we need a flashing tool, in this case clone ST-LINK:
 
 ![ST-LINK](/img/stlink.jpg){: .center-block width="50%" :}
 

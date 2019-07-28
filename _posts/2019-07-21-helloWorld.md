@@ -48,13 +48,13 @@ is really happening under the hood.
 Ha! Did you think we could get by without these bad boys? Well no. As a quick summary
 the memory is organized in blocks, commonly know as [registers](https://en.wikipedia.org/wiki/Hardware_register),
 where information can be stored, each of this blocks is identified by an address:
-
+<center>
 | Address | Value |
 | :------ | :---- |
 | 0x00 | 0xFF |
 | 0x01 | 0x00 |
-| 0x02 | 0x0A |{: .center-block :}
-
+| 0x02 | 0x0A |
+</center>
 A pointer is a coding element that stores the address of a register in its value field,
 essentially it points to its address. Pointers can also be dereferenced to access the values
 stored in that register, e.g.
@@ -105,7 +105,7 @@ What this means is that the pin state can only be Low (connected to GND) or floa
 The built-in LED is connected to the fifth pin of the Port B (PB5) on the microcontroller,
 following this circuit:
 
-![Built-in LED Circuit](/img/leddiagram.jpeg){: .center-block width="50%" :}
+![Built-in LED Circuit](/img/stm8blue-schematic.png){: .center-block width="50%" :}
 
 PB5 happens to be a true open drain pin, but it is fine because the LED is tied to
 3.3V so pulling the pin low will turn it on.
@@ -181,3 +181,24 @@ void main(){
   
 }
 ```
+
+### Compiling the code
+To compile the code we are going to use the SDCC from the Comand Line Interface.
+Open `cmd.exe` on Windows or `bash` on Unix and navigate to the folder that contains
+your `main.c` file using `cd` and `dir` comands. 
+Tip: [How to navigate in CMD](https://riptutorial.com/cmd/example/8646/navigating-in-cmd).
+
+Now execute the following command to start the compilation:
+```
+sdcc -lstm8 -mstm8 --out-fmt-ihx --std-sdcc11 main.c
+```
+Let's analize the different parts:
+* **-mstm8** define the microcontroller (stm8)
+* **--out-fmt-ihx** define the compiled file format (.ihx)
+* **--std-sdcc11** follow the [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision)) 
+standard but allow some conflicts
+* **main.c** the file to be compiled
+
+More information about the compilation options can be found executing `sddc --help`
+or reading the [SDCC user guide](http://sdcc.sourceforge.net/doc/sdccman.pdf) 
+(starting from page 26).
