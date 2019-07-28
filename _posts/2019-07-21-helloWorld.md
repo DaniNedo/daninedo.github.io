@@ -48,13 +48,13 @@ is really happening under the hood.
 Ha! Did you think we could get by without these bad boys? Well no. As a quick summary
 the memory is organized in blocks, commonly know as [registers](https://en.wikipedia.org/wiki/Hardware_register),
 where information can be stored, each of this blocks is identified by an address:
-<center>
+
 | Address | Value |
 | :------ | :---- |
 | 0x00 | 0xFF |
 | 0x01 | 0x00 |
 | 0x02 | 0x0A |
-</center>
+
 A pointer is a coding element that stores the address of a register in its value field,
 essentially it points to its address. Pointers can also be dereferenced to access the values
 stored in that register, e.g.
