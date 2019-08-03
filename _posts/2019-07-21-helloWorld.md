@@ -24,7 +24,7 @@ following specs:
 
 {: .box-note}
 **Note:** It is not a very recommended microcontroller for development because it is only
-guaranteed to work for up to 100 flash cycles. If you need to buy one I suggest you 
+guaranteed to work for up to 100 flash cycles. If you need to buy one I suggest you
 to get the STM8S103F3P6 instead, it supports up to 10000 flash cycles and you can
 find it with the same breakout board.
 
@@ -34,15 +34,15 @@ having them on hand during the reading.
 
 ## Bare metal programming
 In these articles we are not going to use any libraries apart from those that come with
-standard C, we will have to directly interact with the hardware of the 
-microcontroller without using any API or hardware abstraction layers. 
+standard C, we will have to directly interact with the hardware of the
+microcontroller without using any API or hardware abstraction layers.
 
 This approach is almost at the bottom of the low level human-readable codes, preceded
 probably only by code written in [Assembly Language](https://en.wikipedia.org/wiki/Assembly_language).
 Then of course there is [Machine Code](https://simple.wikipedia.org/wiki/Machine_code),
 that has hexadecimal or binary formats and it is not readble by humans.
-Although a bit intimidating for a begginer, it is a good way of understanding what
-is really happening under the hood.
+Although a bit intimidating for a begginer, it is a good way to undestad what
+is really going on.
 
 ### Pointers
 Ha! Did you think we could get by without these bad boys? Well no. As a quick summary
@@ -117,7 +117,7 @@ GPIO have various configuration options that can be set through these registers:
 - Output Data Register (ODR)
 - Input Data Register (IDR)
 
-We need to setup PB5 as an open drain output. In the reference manual (page 107) 
+We need to setup PB5 as an open drain output. In the reference manual (page 107)
 all the posible configurations are presented:
 
 ![Port configuration](/img/portconfig.JPG){: .center-block width="90%" :}
@@ -134,15 +134,15 @@ The addresses we are interested in are `0x005000` for `ODR` and `0x005007` for `
 
 ### The code
 To start with, we need to create a blank main.c file using our prefered text editor.
-I suggest keeping the files organized and using on folder per example. The code 
+I suggest keeping the files organized and using on folder per example. The code
 for this tutorials is available on [Github](https://github.com/DaniNedo/stm8).
 
 Accessing the registers is done by dereferencing a pointer that points to the desired address:
 ```
-#define PB_ODR *(volatile char*)0x5005 
+#define PB_ODR *(volatile char*)0x5005
 #define PB_DDR *(volatile char*)0x5007
 ```
-The keyword `volatile` indicates the compiler to not optimize that element, this is 
+The keyword `volatile` indicates the compiler to not optimize that element, this is
 necessary because the SFR may change during run time by unknown source
 (not known to compiler). Check [this](https://barrgroup.com/Embedded-Systems/How-To/C-Volatile-Keyword)
 for more information. Also notice that we are not defining any variable, for instance,
@@ -162,31 +162,31 @@ while(1){
   for(int i = 0; i < 30000; i++){;} // Basic delay
 }
 ```
-If you are not familiar with bitwise operations take a look 
+If you are not familiar with bitwise operations take a look
 [here](https://stackoverflow.com/questions/47981/how-do-you-set-clear-and-toggle-a-single-bit/47990#47990).
 
 The final code should look something like this:
 
 {% highlight cpp linenos %}
-#define PB_ODR *(volatile char*)0x5005 
+#define PB_ODR *(volatile char*)0x5005
 #define PB_DDR *(volatile char*)0x5007
 
 void main(){
 
   PB_DDR = (1 << 5);
-  
+
   while(1){
     PB_ODR ^= (1 << 5);
     for(int i = 0; i < 30000; i++){;}
   }
-  
+
 }
 {% endhighlight %}
 
 ### Compiling the code
 To compile the code we are going to use the SDCC from the Comand Line Interface.
 Open `cmd.exe` on Windows or `bash` on Unix and navigate to the folder that contains
-your `main.c` file using `cd` and `dir` comands. 
+your `main.c` file using `cd` and `dir` comands.
 Tip: [How to navigate in CMD](https://riptutorial.com/cmd/example/8646/navigating-in-cmd).
 
 Now execute the following command to start the compilation:
@@ -196,13 +196,13 @@ sdcc -mstm8 --out-fmt-ihx --std-sdcc11 main.c
 Let's analize the different parts:
 * **-mstm8** define the microcontroller (stm8)
 * **--out-fmt-ihx** define the compiled file format (.ihx)
-* **--std-sdcc11** follow the [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision)) 
+* **--std-sdcc11** follow the [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision))
 standard but allow some conflicts
 * **main.c** the file to be compiled
 
 {: .box-note}
 **Note:** More information about the compilation options can be found executing `sddc --help`
-or reading the [SDCC user guide](http://sdcc.sourceforge.net/doc/sdccman.pdf) 
+or reading the [SDCC user guide](http://sdcc.sourceforge.net/doc/sdccman.pdf)
 (starting from page 26).
 
 A few files will be generated after the compiler has done its job. For now we are
@@ -213,10 +213,10 @@ contains the compiled firmware that we need to upload to the microcontroller.
 If you are using stm8flash, you can simply call:
 ```
 stm8flash -c stlinkv2 -p stm8s003f3 -w main.ihx
-``` 
+```
 
 On the other hand, if you are using ST Visual Programmer as I do,
-it only supports .hex or motorola's .s19 extensions. The .s19 file can be automatically generated 
+it only supports .hex or motorola's .s19 extensions. The .s19 file can be automatically generated
 changing the `--out-fmt-ihx` to `--out-fmt-s19`, however I had some issues trying to flash my
 device with the .s19 file generated from SDCC. The way I found it works the best is generating
 the .ihx file as we did before and then calling:
@@ -252,7 +252,7 @@ In reality we are executing the following:
 ```
 STVP_CmdLine -BoardName=ST-LINK -Port=USB -ProgMode=SWIM -Device=STM8S003F3
 -FileProg=main.hex
-``` 
+```
 These flags are the default ones and they have the proper settings for your case.
 Probably there are a couple more, but I think those are the most relevant.
 
