@@ -1,0 +1,9 @@
+---
+layout: post
+title: Introduction to assembly language
+subtitle: Undestand your microcontroller!
+gh-repo: daninedo/stm8
+gh-badge: [star, fork, follow]
+tags: [STM, SMT8, Assembly, C]
+comments: true
+---

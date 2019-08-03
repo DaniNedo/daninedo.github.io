@@ -166,6 +166,7 @@ If you are not familiar with bitwise operations take a look
 [here](https://stackoverflow.com/questions/47981/how-do-you-set-clear-and-toggle-a-single-bit/47990#47990).
 
 The final code should look something like this:
+
 {% highlight cpp linenos %}
 #define PB_ODR *(volatile char*)0x5005 
 #define PB_DDR *(volatile char*)0x5007
@@ -181,7 +182,6 @@ void main(){
   
 }
 {% endhighlight %}
-<br>
 
 ### Compiling the code
 To compile the code we are going to use the SDCC from the Comand Line Interface.
@@ -236,13 +236,13 @@ Next we need to physically connect our dev board to the ST-LINK like this:
 The final step is to upload our firmware to the microcontroller calling. This can be done in
 two ways:
 
-**Using the STVP GUI**<br>
+#### Using the STVP GUI
 Start the GUI and go to _Configure_ -> _Configure ST Visual Programmer_, then select ST-LINK as
-_Hardware:_, SWIM as _Port:_, and your microcontroller model in _Device:_, in my case STM8S003F3.
+_Hardware_, SWIM as _Port_, and your microcontroller model in _Device_, in my case STM8S003F3.
 Next go to _File_ -> _Open..._ and select the .hex file and finally go to _Program_ and press
-_Current Tab_. At this point the buil-in LED of you board should start blinking.
+_Current Tab_. At this point the buil-in LED of your board should start blinking.
 
-**Using the STVP_CmdLine**<br>
+#### Using the STVP_CmdLine
 Open the CMD and again make sure that you are in the project folder, then execute:
 ```
 STVP_CmdLine -Device=STM8S003F3 -FileProg=main.hex
@@ -250,13 +250,14 @@ STVP_CmdLine -Device=STM8S003F3 -FileProg=main.hex
 
 In reality we are executing the following:
 ```
-STVP_CmdLine -BoardName=ST-LINK -Port=USB -ProgMode=SWIM -Device=STM8S003F3 -FileProg=main.hex
+STVP_CmdLine -BoardName=ST-LINK -Port=USB -ProgMode=SWIM -Device=STM8S003F3
+-FileProg=main.hex
 ``` 
 These flags are the default ones and they have the proper settings for your case.
 Probably there are a couple more, but I think those are the most relevant.
 
 {: .box-note}
-**Note:** The flag names are self explanatory, but if you want to know more call 'STVP_CmdLine -help'
+**Note:** The flag names are self explanatory, but if you want to know more call `STVP_CmdLine -help`
 
 Finally, some information will be printed and you will be asked to hit 'Space' to finish or any other
 key to loop. The loop function is nice if you have to program more than one microcontroller.

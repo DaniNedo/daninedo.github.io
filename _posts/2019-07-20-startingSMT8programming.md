@@ -8,10 +8,10 @@ tags: [STM, SMT8, SMT8S SDCC, Make, C, STVP, Windows]
 comments: true
 ---
 
-I wanted learn how to program an STM8 on a Windows machine, however the majority
-of the tutorials I have found were for the Unix world, so I decided to write some
-articles explaining how to setup your Windows PC to be able to program SMT8 and
-other microcontrollers painlessly.
+I could't find a complete tutorial for programming STM8 on Windows, so I decided
+to write my own explaining how to setup a Windows PC to easily do so. However,
+even if you are not using Windows, you can still follow the articles to 
+learn how to program an STM8, tutorials for Unix systems will be linked.
 
 Before you tell me to go and buy a Mac or a Think Pad with Linux, I want to say
 that at the moment of writing this article I only had my trusty Toshiba laptop running
@@ -19,11 +19,6 @@ on Windows and did't want to spend money on a new computer or deal with dual boo
 Even if the Internet is pushing you to use Unix for this kind of applications,
 I think is fine to get the most of the tools you have in order to learn, letting
 performance and other criteria aside.
-
-Finally, even if you do have a machine with Unix OS, you can still follow the
-articles if you want to learn how to program an STM8, I will link tutorials for
-Unix OS when needed.
-
 
 ## Background
 If you are reading this I assume that you at least had some expirience blinking
