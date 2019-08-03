@@ -218,13 +218,14 @@ On the other hand, if you are using ST Visual Programmer as I do,
 it only supports .hex or motorola's .s19 extensions. The .s19 file can be automatically generated 
 changing the `--out-fmt-ihx` to `--out-fmt-s19`, however I had some issues trying to flash my
 device with the .s19 file generated from SDCC. The way I found it works the best is generating
-the .ihx file as we did before and then calling
+the .ihx file as we did before and then calling:
 ```
 packihx main.ihx > main.hex
 ```
 This will generate the necessary .hex file.
 
 Next we need to physically connect our dev board to the ST-LINK like this:
+
 | ST-LINK | STM8 Board |
 | :------ | :---- |
 | GND | GND |
