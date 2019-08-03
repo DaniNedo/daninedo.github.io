@@ -181,6 +181,7 @@ void main(){
   
 }
 ```
+<br>
 
 ### Compiling the code
 To compile the code we are going to use the SDCC from the Comand Line Interface.
@@ -235,14 +236,12 @@ Next we need to physically connect our dev board to the ST-LINK like this:
 The final step is to upload our firmware to the microcontroller calling. This can be done in
 two ways:
 
-**Using the STVP GUI**
-Start the GUI and go to _Configure_ -> _Configure ST Visual Programmer_, then select ST-LINK as
+**Using the STVP GUI**  Start the GUI and go to _Configure_ -> _Configure ST Visual Programmer_, then select ST-LINK as
 _Hardware:_, SWIM as _Port:_, and your microcontroller model in _Device:_, in my case STM8S003F3.
 Next go to _File_ -> _Open..._ and select the .hex file and finally go to _Program_ and press
 _Current Tab_. At this point the buil-in LED of you board should start blinking.
 
-**Using the STVP_CmdLine**
-Open the CMD and again make sure that you are in the project folder, then execute:
+**Using the STVP_CmdLine**  Open the CMD and again make sure that you are in the project folder, then execute:
 ```
 STVP_CmdLine -Device=STM8S003F3 -FileProg=main.hex
 ```
