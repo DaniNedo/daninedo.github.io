@@ -15,9 +15,9 @@ typing some lines of code and blinking some LEDs!
 ## The STM8S
 I'm going to use the STM8S003F3P6, a value line 8-bit microcontroller with the
 following specs:
-- 8 KB of flash memory
-- 1 KB of RAM
-- 128 KB of EEPROM
+- 8 KByte of flash memory
+- 1 KByte of RAM
+- 128 Bytes of EEPROM
 - Hardware I2C, UART & SPI
 - 10 bit ADC
 - 16 GPIOs
@@ -190,7 +190,7 @@ Tip: [How to navigate in CMD](https://riptutorial.com/cmd/example/8646/navigatin
 
 Now execute the following command to start the compilation:
 ```
-sdcc -lstm8 -mstm8 --out-fmt-ihx --std-sdcc11 main.c
+sdcc -mstm8 --out-fmt-ihx --std-sdcc11 main.c
 ```
 Let's analize the different parts:
 * **-mstm8** define the microcontroller (stm8)
@@ -199,6 +199,66 @@ Let's analize the different parts:
 standard but allow some conflicts
 * **main.c** the file to be compiled
 
-More information about the compilation options can be found executing `sddc --help`
+{: .box-note}
+**Note:** More information about the compilation options can be found executing `sddc --help`
 or reading the [SDCC user guide](http://sdcc.sourceforge.net/doc/sdccman.pdf) 
 (starting from page 26).
+
+A few files will be generated after the compiler has done its job. For now we are
+mostly interested in the main.ihx file. The extension .ihx stands for Intel HEX and it
+contains the compiled firmware that we need to upload to the microcontroller.
+
+### Flashing the firmware
+If you are using stm8flash, you can simply call:
+```
+stm8flash -c stlinkv2 -p stm8s003f3 -w main.ihx
+``` 
+
+On the other hand, if you are using ST Visual Programmer as I do,
+it only supports .hex or motorola's .s19 extensions. The .s19 file can be automatically generated 
+changing the `--out-fmt-ihx` to `--out-fmt-s19`, however I had some issues trying to flash my
+device with the .s19 file generated from SDCC. The way I found it works the best is generating
+the .ihx file as we did before and then calling
+```
+packihx main.ihx > main.hex
+```
+This will generate the necessary .hex file.
+
+Next we need to physically connect our dev board to the ST-LINK like this:
+| ST-LINK | STM8 Board |
+| :------ | :---- |
+| GND | GND |
+| 3.3V | 3.3V |
+| SWIM | SWIM |
+
+The final step is to upload our firmware to the microcontroller calling. This can be done in
+two ways:
+
+**Using the STVP GUI**
+Start the GUI and go to _Configure_ -> _Configure ST Visual Programmer_, then select ST-LINK as
+_Hardware:_, SWIM as _Port:_, and your microcontroller model in _Device:_, in my case STM8S003F3.
+Next go to _File_ -> _Open..._ and select the .hex file and finally go to _Program_ and press
+_Current Tab_. At this point the buil-in LED of you board should start blinking.
+
+**Using the STVP_CmdLine**
+Open the CMD and again make sure that you are in the project folder, then execute:
+```
+STVP_CmdLine -Device=STM8S003F3 -FileProg=main.hex
+```
+
+In reality we are executing the following:
+```
+STVP_CmdLine -BoardName=ST-LINK -Port=USB -ProgMode=SWIM -Device=STM8S003F3 -FileProg=main.hex
+``` 
+These flags are the default ones and they have the proper settings for your case.
+Probably there are a couple more, but I think those are the most relevant.
+
+{: .box-note}
+**Note:** The flag names are self explanatory, but if you want to know more call 'STVP_CmdLine -help'
+
+Finally, some information will be printed and you will be asked to hit 'Space' to finish or any other
+key to loop. The loop function is nice if you have to program more than one microcontroller.
+Additionally a Result.log file will be generated, this can be disabled adding the `no-log` flag.
+Now the built-in LED should be blinking as well.
+
+Congratulations you just wrote and flashed your first bare minimum firmware for STM8!
