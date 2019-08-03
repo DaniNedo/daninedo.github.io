@@ -166,7 +166,7 @@ If you are not familiar with bitwise operations take a look
 [here](https://stackoverflow.com/questions/47981/how-do-you-set-clear-and-toggle-a-single-bit/47990#47990).
 
 The final code should look something like this:
-```
+{% highlight cpp linenos %}
 #define PB_ODR *(volatile char*)0x5005 
 #define PB_DDR *(volatile char*)0x5007
 
@@ -180,7 +180,7 @@ void main(){
   }
   
 }
-```
+{% endhighlight %}
 <br>
 
 ### Compiling the code
@@ -236,12 +236,14 @@ Next we need to physically connect our dev board to the ST-LINK like this:
 The final step is to upload our firmware to the microcontroller calling. This can be done in
 two ways:
 
-**Using the STVP GUI**  Start the GUI and go to _Configure_ -> _Configure ST Visual Programmer_, then select ST-LINK as
+**Using the STVP GUI**<br>
+Start the GUI and go to _Configure_ -> _Configure ST Visual Programmer_, then select ST-LINK as
 _Hardware:_, SWIM as _Port:_, and your microcontroller model in _Device:_, in my case STM8S003F3.
 Next go to _File_ -> _Open..._ and select the .hex file and finally go to _Program_ and press
 _Current Tab_. At this point the buil-in LED of you board should start blinking.
 
-**Using the STVP_CmdLine**  Open the CMD and again make sure that you are in the project folder, then execute:
+**Using the STVP_CmdLine**<br>
+Open the CMD and again make sure that you are in the project folder, then execute:
 ```
 STVP_CmdLine -Device=STM8S003F3 -FileProg=main.hex
 ```
