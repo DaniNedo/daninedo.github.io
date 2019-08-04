@@ -41,5 +41,5 @@ When an instruction is called by the CU, the different data paths that connect t
 buses, ALU and memory registers are rearranged to perform the desired action. Consider
 this oversimplified example of a machine with the following components:
 ![machine1](/img/simplemachine1.jpg)
-Imagine that we want to add the values of two variables (a and b) and store the result in a
-third one (c), what in C would be represented as `c = a + b`.
+Imagine that we want to add the values of two variables (x and y) and store the result in a
+third one (z), what in C would be represented as `z = x + y`.
