@@ -40,6 +40,6 @@ composed of an identifier and some arguments that can be data or memory location
 When an instruction is called by the CU, the different data paths that connect the
 buses, ALU and memory registers are rearranged to perform the desired action. Consider
 this oversimplified example of a machine with the following components:
-![machine1](/img/simplemachine1.jpg)
+![machine1](/img/machine1.png)
 Imagine that we want to add the values of two variables (x and y) and store the result in a
 third one (z), what in C would be represented as `z = x + y`.
