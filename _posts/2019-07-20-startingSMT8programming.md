@@ -10,7 +10,7 @@ comments: true
 
 I could't find a complete tutorial for programming STM8 on Windows, so I decided
 to write my own explaining how to setup a Windows PC to easily do so. However,
-even if you are not using Windows, you can still follow the articles to 
+even if you are not using Windows, you can still follow the articles to
 learn how to program an STM8, tutorials for Unix systems will be linked.
 
 Before you tell me to go and buy a Mac or a Think Pad with Linux, I want to say
@@ -24,7 +24,7 @@ performance and other criteria aside.
 If you are reading this I assume that you at least had some expirience blinking
 an LED with an Arduino board and now you are looking for more exciting challenges.
 
-Arduino is not bad, indeed it's a great tool to learn and it's the way I started
+Arduino is a great tool to learn and it's the way I started
 microcontroller programming, but it "hides" lots of stuff from you. As you learn
 more and more about programming, you start to question how is this magic
 that links the firmware you write and the hardware works, specially when it comes
@@ -78,7 +78,7 @@ for Unix you can use [STM8Flash](https://github.com/vdudouyt/stm8flash).
 ### Installing SDCC
 I said that we are going to do all this on Windows, but I lied...SDCC is GNU tool
 that with some magic help from [MINGW](http://www.mingw.org/) works on Windows as
-well (you don't have to install MINGW directly). SDCC is downloadable 
+well (you don't have to install MINGW directly). SDCC is downloadable
 from [here](https://sourceforge.net/projects/sdcc/files/).
 Get the latest version suitable for your machine and follow the instructions of
 the installer. After the installation you have to add SDCC to your machine's Path,

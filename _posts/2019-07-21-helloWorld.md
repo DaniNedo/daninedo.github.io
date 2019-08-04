@@ -253,7 +253,7 @@ In reality we are executing the following:
 STVP_CmdLine -BoardName=ST-LINK -Port=USB -ProgMode=SWIM -Device=STM8S003F3
 -FileProg=main.hex
 ```
-These flags are the default ones and they have the proper settings for your case.
+These flags are the default ones and they have the proper settings for our case.
 Probably there are a couple more, but I think those are the most relevant.
 
 {: .box-note}
