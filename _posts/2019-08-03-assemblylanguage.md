@@ -37,8 +37,6 @@ Instructions can be strored in the same memory as the data and
 the program (Von-Neumann Arquitecture), or in their independent memory (Harvard Arquitecture).
 Our STM8 uses a modified version of Harvard Arquitecture with a Reduced Instruction Set (RISC).
 
-The instructions
-
 ### Program execution
 When an instruction is called by the CU, the different data paths that connect the
 buses, ALU and memory registers are rearranged to perform the desired action, this is better explained with an example. Consider
@@ -60,7 +58,7 @@ What we can see in the picture is the following:
 Next we go though the different steps of the program execution.
 
 #### 1.Loading the value of "x"
-![load x value](/img/computer_diag_loading_x)
+![load x value](/img/computer_diag_loading_x.png)
 Ok, what is happening here? Let's analize it:
 1) The program counter is at 0x00
 2) The instruction 0x00 (Load x) is passed to the CU and decoded
@@ -72,5 +70,5 @@ that the parallel bus as wide as the registers so that the data can be
 copied in one go.
 
 #### 2.Loading the value of "y"
-![load x value](/img/computer_diag_loading_x)
+![load x value](/img/computer_diag_loading_x.png)
 The program counter increases by one and the next instruction (0x01) is loaded and the previous process is repeated.
