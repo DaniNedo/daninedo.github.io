@@ -13,7 +13,7 @@ to flash the microcontroller. In this brief entry we are going to take a look at
 some other files to understand what is happening under the hood.
 
 ## Running the code
-To begin with let's quickly go through how the code is ran in the microcontroller.
+To begin with let's quickly explain how the code is ran in the microcontroller.
 
 ### Arquitecture
 The very basic building blocks of a microcontroller or even a computer are the
@@ -26,20 +26,37 @@ the results of its operations and the Control Unit (CU) that manages all the pro
 
 Finally, the different components are linked together by one or more Data Buses.
 
-### Instruction set
+### Computer Instructions
 In order to make something to happen, hopefully what is writen in our code, we
 need to tell the CPU where to get the data and how to process it. This is done using
-the so called Instructions, that are integrated as a Set. They can be strored in the same memory as the data and
-the program (Von-Neumann Arquitecture), or in their independent memory (Harvard Arquitecture).
-Our STM8 uses a modified version of Harvard Arquitecture with a Reduced Instruction Set (RISC).
-
-The instructions are a representation of a real physical process, you can think of
+Instructions that are a representation of a real physical process, you can think of
 them as the last frontier between firmware and hardware. They are an array of bits
 composed of an identifier and some arguments that can be data or memory locations.
 
+Instructions can be strored in the same memory as the data and
+the program (Von-Neumann Arquitecture), or in their independent memory (Harvard Arquitecture).
+Our STM8 uses a modified version of Harvard Arquitecture with a Reduced Instruction Set (RISC).
+
+The instructions
+
+### Program execution
 When an instruction is called by the CU, the different data paths that connect the
-buses, ALU and memory registers are rearranged to perform the desired action. Consider
-this oversimplified example of a machine with the following components:
-![machine1](/img/machine1.png)
-Imagine that we want to add the values of two variables (x and y) and store the result in a
-third one (z), what in C would be represented as `z = x + y`.
+buses, ALU and memory registers are rearranged to perform the desired action, this is better explained with an example. Consider
+this oversimplified model of a microcontroller/computer programmed to add the values
+of two variables (x and y) and store the result in a third one (z):
+
+![machine1](/img/computer_diagram.png)
+
+What we can see in the picture is the following:
+* A memory that contains the instructions in the proper order
+* A memory that stores the variables and their values
+* A Program Counter (PC) that iterates over the instructions
+* A Control Unit with an Instruction Decoder (The Instruction Set)
+* The ALU with two inputs (A and B), one output (C) and an enable switch (EN)
+* A Process Register bank
+* The Data Bus that transmits the information
+* Two "gates", Data Select (DS) and Register Select (RS)
+
+Next we go though the different steps of the program execution.
+
+#### 1.Loading the value of X
