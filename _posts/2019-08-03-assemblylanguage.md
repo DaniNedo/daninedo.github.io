@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Introduction to assembly language
+title: Introduction to assembly language WIP
 subtitle: Speaking to the microcontroller!
 gh-repo: daninedo/stm8
 gh-badge: [star, fork, follow]
@@ -45,7 +45,7 @@ buses, ALU and memory registers are rearranged to perform the desired action, th
 this oversimplified model of a microcontroller/computer programmed to add the values
 of two variables (x and y) and store the result in a third one (z):
 
-![machine1](/img/computer_diagram.png)
+![basic computer](/img/computer_diagram.png)
 
 What we can see in the picture is the following:
 * A memory that contains the instructions in the proper order
@@ -54,9 +54,23 @@ What we can see in the picture is the following:
 * A Control Unit with an Instruction Decoder (The Instruction Set)
 * The ALU with two inputs (A and B), one output (C) and an enable switch (EN)
 * A Process Register bank
-* The Data Bus that transmits the information
+* The Parallel Data Bus that transmits the information
 * Two "gates", Data Select (DS) and Register Select (RS)
 
 Next we go though the different steps of the program execution.
 
-#### 1.Loading the value of X
+#### 1.Loading the value of "x"
+![load x value](/img/computer_diag_loading_x)
+Ok, what is happening here? Let's analize it:
+1) The program counter is at 0x00
+2) The instruction 0x00 (Load x) is passed to the CU and decoded
+3) DS and RS gates are set according to the arguments of the instruction
+4) The value of 0x3A (x) is loaded into the register 0x10
+
+In our model this operation takes just 1 clock cycle (in a real case this can be different) and it happens almost inmediately if we ignore the propagation delay of the hardware. Also we are making the assumption
+that the parallel bus as wide as the registers so that the data can be
+copied in one go.
+
+#### 2.Loading the value of "y"
+![load x value](/img/computer_diag_loading_x)
+The program counter increases by one and the next instruction (0x01) is loaded and the previous process is repeated.
