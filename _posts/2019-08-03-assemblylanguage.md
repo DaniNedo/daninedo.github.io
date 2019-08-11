@@ -58,11 +58,10 @@ Next we go though the different steps of the program execution.
 
 ### 1.Loading the value of "x"
 ![load x value](/img/computer_diag_loading_x.png)
-Ok, what is happening here? Let's analize it:
-1) The program counter is at 0x00
-2) The instruction 0x00 (Load x) is passed to the CU and decoded
-3) DS and RS gates are set according to the arguments of the instruction
-4) The value of 0x3A (x) is loaded into the register 0x10
+Ok, what is happening here? The program counter is at 0x00 and the instruction
+0x00 (Load x) is passed to the CU and decoded. After that the DS and RS gates are
+set according to the arguments of the instruction and the value of 0x3A (x) is
+loaded into the register 0x10.
 
 In our model this operation takes just 1 clock cycle (in a real case this can be different)
 and it happens almost inmediately if we ignore the propagation delay of the hardware.
@@ -84,4 +83,4 @@ so we only have an enable pin (EN) set to perform the operation.
 ### 4.Storing the result
 ![store result](/img/computer_diag_storing.png)
 Finally the last instuction is executed and the result value stored in the process
-register is copied to the memory. 
+register is copied to the memory.
