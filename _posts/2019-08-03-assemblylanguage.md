@@ -23,12 +23,12 @@ The CPU itself is composed of the Arithmetic Logic Unit (ALU), that performs ari
 and logic operations, processor registers that supply operands to the ALU and store
 the results of its operations and the Control Unit (CU) that manages all the processes.
 
-Finally, the different components are linked together by one or more Data Buses.
+The different components are linked together by one or more Data Buses.
 
 ## Computer Instructions
 In order to make something to happen, hopefully what is writen in our code, we
 need to tell the CPU where to get the data and how to process it. This is done using
-Instructions that are a representation of a real physical process, you can think of
+Instructions, which are a representation of a real physical process, you can think of
 them as the last frontier between firmware and hardware. They are an array of bits
 composed of an identifier and some arguments that can be data or memory locations.
 
@@ -39,7 +39,7 @@ Our STM8 uses a modified version of Harvard Arquitecture with a Reduced Instruct
 ## Program execution
 When an instruction is called by the CU, the different data paths that connect the
 buses, ALU and memory registers are rearranged to perform the desired action, this is better explained with an example. Consider
-this oversimplified model of a microcontroller/computer programmed to add the values
+this oversimplified model of a microcontroller programmed to add the values
 of two variables (x and y) and store the result in a third one (z):
 
 ![basic computer](/img/computer_diagram.png)
@@ -56,31 +56,30 @@ What we can see in the picture is the following:
 
 Next we go though the different steps of the program execution.
 
-### 1.Loading the value of "x"
+### Step 1: Loading the value of "x"
 ![load x value](/img/computer_diag_loading_x.png)
-Ok, what is happening here? The program counter is at 0x00 and the instruction
-0x00 (Load x) is passed to the CU and decoded. After that the DS and RS gates are
-set according to the arguments of the instruction and the value of 0x3A (x) is
-loaded into the register 0x10.
+The program counter is at 0x00 and the instruction 0x00 (Load x) is passed to the
+CU and decoded. After that the DS and RS gates are set according to the arguments
+of the instruction and the value of 0x3A (x) is loaded into the register 0x10.
 
 In our model this operation takes just 1 clock cycle (in a real case this can be different)
 and it happens almost inmediately if we ignore the propagation delay of the hardware.
-Also we are making the assumption that the parallel bus as wide as the registers so that the data can be
-copied in one go.
+Also we are making the assumption that the parallel bus is as wide as the registers so
+that the data can be copied in one go.
 
-### 2.Loading the value of "y"
+### Step 2: Loading the value of "y"
 ![load y value](/img/computer_diag_loading_y.png)
 The program counter increases by one and the next instruction (0x01) is loaded
 and the previous process is repeated.
 
-### 3.Adding two loaded values
+### Step 3: Adding the values
 ![add values](/img/computer_diag_adding.png)
 Next the Add instruction is executed. This time the data bus is not used, instead
 the the proccess registers 0x10 and 0x11 are passed to the ALU and the
 result is stored into the 0x12 register. In our case, the ALU can only perform addition,
-so we only have an enable pin (EN) set to perform the operation.
+so we only have to set the enable pin (EN) to perform the operation.
 
-### 4.Storing the result
+### Step 4: Storing the result
 ![store result](/img/computer_diag_storing.png)
 Finally the last instuction is executed and the result value stored in the process
 register is copied to the memory.
