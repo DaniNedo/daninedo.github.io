@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Introduction to assembly language WIP
+title: Introduction to machine language
 subtitle: Speaking to the microcontroller!
 gh-repo: daninedo/stm8
 gh-badge: [star, fork, follow]
@@ -8,7 +8,7 @@ tags: [STM, SMT8, Assembly, C]
 comments: true
 ---
 
-Last time our compiler generated a few files but we only used the main.ihx one
+Last time our compiler generated a few files but we only used the _main.ihx_ one
 to flash the microcontroller. In this brief entry we are going to take a look at
 some other files to understand what is happening under the hood.
 
@@ -83,3 +83,85 @@ so we only have to set the enable pin (EN) to perform the operation.
 ![store result](/img/computer_diag_storing.png)
 Finally the last instuction is executed and the result value stored in the process
 register is copied to the memory.
+
+As you can see with this simple example the proccess is quite straigh forward. Of
+course you have to take into account that a real microcontroller or computer is
+much more complex, and includes many more instructions to perform arithmetics,
+logic and conditional jumps... but this can serve as a good base to understand how
+the things work.
+
+## The machine code
+When we executed the compiler last time many files were generated including the
+_main.asm_ file. The .asm extension stands for [Assembly Language](https://en.wikipedia.org/wiki/Assembly_language)
+and it is a lenguage that explicitly shows the instructions that compose a program
+in a format that a human can read.
+
+In the _main.asm_ file our blinky code starts at the line 90. The lines prior to
+it are initializations for the microcontroller.
+
+{% highlight cpp linenos %}
+\_main:
+;	main.c: 6: PB_DDR = (1 << 5);
+	mov	0x5007+0, #0x20
+;	main.c: 8: while(1){
+00103$:
+;	main.c: 9: PB_ODR ^= (1 << 5);
+	bcpl	20485, #5
+;	main.c: 10: for(int i = 0; i < 30000; i++){;}
+	clrw	x
+00106$:
+	cpw	x, #0x7530
+	jrsge	00103$
+	incw	x
+	jra	00106$
+;	main.c: 13: }
+	ret
+{% endhighlight %}
+
+In this bit of code we can differentiate a few elements:
+* Instructions (e.g. `clrw x`)
+* Tags (e.g. `\_main:` or `00106$:`)
+* HEX representation (e.g. `0082C 5F`)
+* Comments (e.g. `;main-c: 8: while(1){`)
+
+### Reading the assembly code
+The comments give us a general idea of that is happening next, but we are going
+analize the code in detail to understand it better. Keep in mind that as many other
+languages, this is executed from top to bottom line by line, furthermore I suggest
+you keeping the blinky _main.c_ code on hand get a copy of the the STM8
+[Programming Manual](https://www.st.com/content/ccc/resource/technical/document/programming_manual/43/24/13/9a/89/df/45/ed/CD00161709.pdf/files/CD00161709.pdf/jcr:content/translations/en.CD00161709.pdf)
+where you can find what the different instructions do. I guarantee the previous
+code would be much clearer if you understand the meaning of the name acronyms.
+
+Nevertheless, let's begin:
+```
+\_main:
+```
+This is an identifier tag for the main function. It is called at the after the initialization of the microcontroller.
+```
+;	main.c: 6: PB_DDR = (1 << 5);
+mov	0x5007+0, #0x20
+```
+The _mov_ (move) instruction takes two arguments, a memory address and a value. The
+memory address is `0x5007+0` (PB_DDR) and the value `(1 << 5)` is directly converted to `0x20`,
+with the `#` meaning that is a numerical value. As you remember, we were not creating
+any variable two first lines of the main.c files, and that is reflected in the assembly
+code.
+```
+;	main.c: 8: while(1){
+00103$:
+```
+Another tag to indicate where the _While()_ loop starts.
+```
+;	main.c: 9: PB_ODR ^= (1 << 5); // Toggle PB5
+	bcpl	20485, #5
+```
+The _bcpl_ (Bit Complement) flips the nth bit of a memory address provided. In
+this case the 5th bit of the memory address `20485` is fliped. Again, the address
+is not arbitrary, converted to decimal it is 0x5005 which is the address of the
+PB_ODR.
+```
+;	main.c: 10: for(int i = 0; i < 30000; i++){;}
+	clrw	x
+00106$:
+```
