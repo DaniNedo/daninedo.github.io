@@ -99,28 +99,27 @@ in a format that a human can read.
 In the _main.asm_ file our blinky code starts at the line 90. The lines prior to
 it are initializations for the microcontroller.
 
-{% highlight cpp linenos %}
-\_main:
-;	main.c: 6: PB_DDR = (1 << 5);
+```
+;main.c: 6: PB_DDR = (1 << 5);
 	mov	0x5007+0, #0x20
 ;	main.c: 8: while(1){
 00103$:
-;	main.c: 9: PB_ODR ^= (1 << 5);
+;main.c: 9: PB_ODR ^= (1 << 5);
 	bcpl	20485, #5
-;	main.c: 10: for(int i = 0; i < 30000; i++){;}
+;main.c: 10: for(int i = 0; i < 30000; i++){;}
 	clrw	x
 00106$:
 	cpw	x, #0x7530
 	jrsge	00103$
 	incw	x
 	jra	00106$
-;	main.c: 13: }
+;main.c: 13: }
 	ret
-{% endhighlight %}
+```
 
 In this bit of code we can differentiate a few elements:
 * Instructions (e.g. `clrw x`)
-* Tags (e.g. `\_main:` or `00106$:`)
+* Tags (e.g. `_main:` or `00106$:`)
 * HEX representation (e.g. `0082C 5F`)
 * Comments (e.g. `;main-c: 8: while(1){`)
 
@@ -135,33 +134,62 @@ code would be much clearer if you understand the meaning of the name acronyms.
 
 Nevertheless, let's begin:
 ```
-\_main:
+_main:
 ```
 This is an identifier tag for the main function. It is called at the after the initialization of the microcontroller.
 ```
-;	main.c: 6: PB_DDR = (1 << 5);
-mov	0x5007+0, #0x20
+;main.c: 6: PB_DDR = (1 << 5);
+	mov	0x5007+0, #0x20
 ```
-The _mov_ (move) instruction takes two arguments, a memory address and a value. The
+The `mov` (move) instruction takes two arguments, a memory address and a value. The
 memory address is `0x5007+0` (PB_DDR) and the value `(1 << 5)` is directly converted to `0x20`,
 with the `#` meaning that is a numerical value. As you remember, we were not creating
 any variable two first lines of the main.c files, and that is reflected in the assembly
 code.
 ```
-;	main.c: 8: while(1){
+;main.c: 8: while(1){
 00103$:
 ```
-Another tag to indicate where the _While()_ loop starts.
+Another tag to indicate where the _while_ loop starts.
 ```
-;	main.c: 9: PB_ODR ^= (1 << 5); // Toggle PB5
+;main.c: 9: PB_ODR ^= (1 << 5); // Toggle PB5
 	bcpl	20485, #5
 ```
-The _bcpl_ (Bit Complement) flips the nth bit of a memory address provided. In
+`bcpl` (Bit Complement) flips the nth bit of a memory address provided. In
 this case the 5th bit of the memory address `20485` is fliped. Again, the address
 is not arbitrary, converted to decimal it is 0x5005 which is the address of the
 PB_ODR.
+
+Next the _for_ loop structure starts and it's composed of few lines.
 ```
-;	main.c: 10: for(int i = 0; i < 30000; i++){;}
+;main.c: 10: for(int i = 0; i < 30000; i++){;}
 	clrw	x
-00106$:
 ```
+`clrw` (Clear word) clears the content of the proccess register x. More info about
+the process registers can be found in the section **3.2 CPU registers** of the
+programming manual.
+```
+00106$:
+	cpw	x, #0x7530
+	jrsge	00103$
+	incw	x
+	jra	00106$
+```
+A tag is created and the `cpw`(Compare word) instruction compares the content of the
+`x` register with `0x7530` (30000 in decimal) subtracting the two values. The `N`
+(Negative) flag is set if the result is negative and the `V` (Overflow) flag is
+set if the subtraction causes an overflow. Other flags might be set, you can check them
+on the page 113 of the P.M. Next the `jrsge` (Jump Relative if Signed Greater or Equal)
+checks if the logic [XOR](https://en.wikipedia.org/wiki/Exclusive_or)
+operation between `N` and `V` and jumps to the `00103$` tag if the result is 0.
+
+In other words, if the result of `cpw` is negative or is causes an overflow but
+not both at the same time the _for_ loop finishes and it returns to the _while_ loop.
+
+If we haven't jumped to `00103$` the `incw` (Increase word) instruction is called and
+the content of `x` is increased by one and the `jra` (Jump Relative Always) causes
+the program to jump to the `00106$` tag.
+
+In the end of the program we see a `ret` (Return from subrutine), which returns from
+the main to the caller. However this instruction won't be ever executed because
+we are in an infinite _while_ loop.
