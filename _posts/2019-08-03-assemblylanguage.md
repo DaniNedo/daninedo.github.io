@@ -30,7 +30,7 @@ In order to make something to happen, hopefully what is writen in our code, we
 need to tell the CPU where to get the data and how to process it. This is done using
 Instructions, which are a representation of a real physical process, you can think of
 them as the last frontier between firmware and hardware. They are an array of bits
-composed of an identifier and some arguments that can be data or memory locations.
+composed of an identifier/operation code (OP) and some arguments that can be data or memory locations.
 
 Instructions can be strored in the same memory as the data and
 the program (Von-Neumann Arquitecture), or in their independent memory (Harvard Arquitecture).
@@ -88,7 +88,7 @@ As you can see with this simple example the proccess is quite straigh forward. O
 course you have to take into account that a real microcontroller or computer is
 much more complex, and includes many more instructions to perform arithmetics,
 logic and conditional jumps... but this can serve as a good base to understand how
-the things work.
+things work.
 
 ## The machine code
 When we executed the compiler last time many files were generated including the
@@ -127,10 +127,10 @@ In this bit of code we can differentiate a few elements:
 The comments give us a general idea of that is happening next, but we are going
 analize the code in detail to understand it better. Keep in mind that as many other
 languages, this is executed from top to bottom line by line, furthermore I suggest
-you keeping the blinky _main.c_ code on hand get a copy of the the STM8
+you keeping the blinky _main.c_ code on hand and getting a copy of the the STM8
 [Programming Manual](https://www.st.com/content/ccc/resource/technical/document/programming_manual/43/24/13/9a/89/df/45/ed/CD00161709.pdf/files/CD00161709.pdf/jcr:content/translations/en.CD00161709.pdf)
 where you can find what the different instructions do. I guarantee the previous
-code would be much clearer if you understand the meaning of the name acronyms.
+code already can be much clearer if you just understand the meaning of the acronyms.
 
 Nevertheless, let's begin:
 ```
@@ -157,7 +157,7 @@ Another tag to indicate where the _while_ loop starts.
 ```
 `bcpl` (Bit Complement) flips the nth bit of a memory address provided. In
 this case the 5th bit of the memory address `20485` is fliped. Again, the address
-is not arbitrary, converted to decimal it is 0x5005 which is the address of the
+is not arbitrary, converted to hex it is 0x5005 which is the address of the
 PB_ODR.
 
 Next the _for_ loop structure starts and it's composed of few lines.
@@ -177,14 +177,19 @@ programming manual.
 ```
 A tag is created and the `cpw`(Compare word) instruction compares the content of the
 `x` register with `0x7530` (30000 in decimal) subtracting the two values. The `N`
-(Negative) flag is set if the result is negative and the `V` (Overflow) flag is
-set if the subtraction causes an overflow. Other flags might be set, you can check them
-on the page 113 of the P.M. Next the `jrsge` (Jump Relative if Signed Greater or Equal)
+(Negative) flag is set if the result is negative, the `V` (Overflow) flag is
+set if the subtraction causes an overflow and the `Z` (Zero) flag is set when the result is 0.
+More info about flags is available on the page 113 of the P.M.
+Next the `jrsge` (Jump Relative if Signed Greater or Equal)
 checks if the logic [XOR](https://en.wikipedia.org/wiki/Exclusive_or)
 operation between `N` and `V` and jumps to the `00103$` tag if the result is 0.
 
-In other words, if the result of `cpw` is negative or is causes an overflow but
-not both at the same time the _for_ loop finishes and it returns to the _while_ loop.
+But why the XOR of `N` and `V` has to be zero? I was trying to answer this question
+for about a week, making binary subtractions, analizing all the necesary bits but nothing
+made much sense to me. Then I found [this article](http://teahlab.com/4-Bit_Signed_Comparator/) that shows how a multibit comparator work, I recommend you checking it to understand why `N` and `V` flags are used.
+The easiest explanation to our initial question (based on the article) is that XOR is used because
+the "Greater or Equal" case is the complementary of the "Less" case, this being `N XOR V = 1`.
+Basically we testing for `x` not being less than the specific value.
 
 If we haven't jumped to `00103$` the `incw` (Increase word) instruction is called and
 the content of `x` is increased by one and the `jra` (Jump Relative Always) causes
@@ -193,3 +198,72 @@ the program to jump to the `00106$` tag.
 In the end of the program we see a `ret` (Return from subrutine), which returns from
 the main to the caller. However this instruction won't be ever executed because
 we are in an infinite _while_ loop.
+
+### From assembly to HEX
+Once we understood our assembly code we can finally jump into the HEX code that will be
+uploaded to our device. If we check the main.lst file, we can see that the HEX
+is a direct translation from the assembly.
+```
+                               85 	.area CODE
+                               86 ;	main.c: 4: void main(){
+                               87 ;	-----------------------------------------
+                               88 ;	 function main
+                               89 ;	-----------------------------------------
+000000                         90 _main:
+                               91 ;	main.c: 6: PB_DDR = (1 << 5);
+000000 35 20 50 07      [ 1]   92 	mov	0x5007+0, #0x20
+                               93 ;	main.c: 8: while(1){
+000004                         94 00103$:
+                               95 ;	main.c: 9: PB_ODR ^= (1 << 5);
+000004 90 1A 50 05      [ 1]   96 	bcpl	20485, #5
+                               97 ;	main.c: 10: for(int i = 0; i < 30000; i++){;}
+000008 5F               [ 1]   98 	clrw	x
+000009                         99 00106$:
+000009 A3 75 30         [ 2]  100 	cpw	x, #0x7530
+00000C 2E F6            [ 1]  101 	jrsge	00103$
+00000E 5C               [ 1]  102 	incw	x
+00000F 20 F8            [ 2]  103 	jra	00106$
+                              104 ;	main.c: 13: }
+000011 81               [ 4]  105 	ret
+```
+In the section 7.4 Instruction Set of the P.M. we can identify all the OP codes of the instructions, let's
+analize, for example, the line 93 of the main.lst file:
+```
+000000 35 20 50 07      [ 1]   92 	mov	0x5007+0, #0x20
+```
+We already know what this line does and now if we look at the OP code for the `mov`
+instruction is easy to decode the HEX bytes at the begining of the line.
+`00000` is the address offset added to the base address which the `.area Code` indicates.
+This base value (00008024) can be find in the main.map file.
+
+Next we have `35` which is the OP code in HEX for the `mov` instruction. After that
+we see the two arguments passed to instruction: the value to set `20` (`#0x20`) and
+the location `50` (Most Significant) and `07` (Least Significant).
+
+![MOV instruction decoding](/img/movOPcode.JPG)
+
+Finally we can take a look at the main.hex file:
+```
+:048000008200800773
+:10800700AE00002707724F00005A26F9AE0000277E
+:0D80170009D68023D700005A26F7CC80043C
+:03800400CC802409
+:1080240035205007901A50055FA375302EF65C205A
+:02803400F881D1
+:00000001FF
+```
+In the fifth line we see the previously analized line:
+```
+...80240035205007...
+```
+It is worth mentioning that some instructions don't have the address explicitly
+indicated in the HEX file. The lengh of the previous instruction serves as the address
+offset in that case. For example for the next instruction on the same line:
+```
+...901A5005...
+```
+the offset will be 000000 + 4 (lenght of `mov`) which is correct as you can see in
+the main.lst code.
+
+Here ends the basic introduction to assembly and HEX, I hope now you have a better
+undestanding of how your MCU works!
