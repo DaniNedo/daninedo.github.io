@@ -29,8 +29,8 @@ The different components are linked together by one or more Data Buses.
 In order to make something to happen, hopefully what is writen in our code, we
 need to tell the CPU where to get the data and how to process it. This is done using
 Instructions, which are a representation of a real physical process, you can think of
-them as the last frontier between firmware and hardware. They are an array of bits
-composed of an identifier/operation code (OP) and some arguments that can be data or memory locations.
+them as the last frontier between firmware and hardware. They are an array of bits called
+operation code (OP code) composed of an identifier and some arguments that can be data or memory locations.
 
 Instructions can be strored in the same memory as the data and
 the program (Von-Neumann Arquitecture), or in their independent memory (Harvard Arquitecture).
@@ -120,7 +120,7 @@ it are initializations for the microcontroller.
 In this bit of code we can differentiate a few elements:
 * Instructions (e.g. `clrw x`)
 * Tags (e.g. `_main:` or `00106$:`)
-* HEX representation (e.g. `0082C 5F`)
+* hex representation (e.g. `0082C 5F`)
 * Comments (e.g. `;main-c: 8: while(1){`)
 
 ### Reading the assembly code
@@ -186,7 +186,7 @@ operation between `N` and `V` and jumps to the `00103$` tag if the result is 0.
 
 But why the XOR of `N` and `V` has to be zero? I was trying to answer this question
 for about a week, making binary subtractions, analizing all the necesary bits but nothing
-made much sense to me. Then I found [this article](http://teahlab.com/4-Bit_Signed_Comparator/) that shows how a multibit comparator work, I recommend you checking it to understand why `N` and `V` flags are used.
+made much sense to me. Then I found [this article](http://teahlab.com/4-Bit_Signed_Comparator/) that shows how a multibit comparator works, I recommend you checking it to understand why `N` and `V` flags are used.
 The easiest explanation to our initial question (based on the article) is that XOR is used because
 the "Greater or Equal" case is the complementary of the "Less" case, this being `N XOR V = 1`.
 Basically we testing for `x` not being less than the specific value.
@@ -199,9 +199,9 @@ In the end of the program we see a `ret` (Return from subrutine), which returns 
 the main to the caller. However this instruction won't be ever executed because
 we are in an infinite _while_ loop.
 
-### From assembly to HEX
-Once we understood our assembly code we can finally jump into the HEX code that will be
-uploaded to our device. If we check the main.lst file, we can see that the HEX
+### From assembly to hex
+Once we understood our assembly code we can finally jump into the hex code that will be
+uploaded to our device. If we check the main.lst file, we can see that the hex
 is a direct translation from the assembly.
 ```
                                85 	.area CODE
@@ -226,23 +226,23 @@ is a direct translation from the assembly.
                               104 ;	main.c: 13: }
 000011 81               [ 4]  105 	ret
 ```
-In the section 7.4 Instruction Set of the P.M. we can identify all the OP codes of the instructions, let's
-analize, for example, the line 93 of the main.lst file:
+In the section **7.4 Instruction Set** of the P.M. we can identify all the OP codes of the instructions, let's
+analize, for example, the line 93 of the _main.lst_ file:
 ```
 000000 35 20 50 07      [ 1]   92 	mov	0x5007+0, #0x20
 ```
 We already know what this line does and now if we look at the OP code for the `mov`
-instruction is easy to decode the HEX bytes at the begining of the line.
+instruction is easy to decode the hex bytes at the begining of the line.
 `00000` is the address offset added to the base address which the `.area Code` indicates.
-This base value (00008024) can be find in the main.map file.
+This base value (`00008024`) can be find in the _main.map_ file.
 
-Next we have `35` which is the OP code in HEX for the `mov` instruction. After that
+Next we have `35` which is the identifier for the `mov` instruction. After that
 we see the two arguments passed to instruction: the value to set `20` (`#0x20`) and
 the location `50` (Most Significant) and `07` (Least Significant).
 
 ![MOV instruction decoding](/img/movOPcode.JPG)
 
-Finally we can take a look at the main.hex file:
+Finally we can take a look at the _main.hex_ file:
 ```
 :048000008200800773
 :10800700AE00002707724F00005A26F9AE0000277E
@@ -257,7 +257,7 @@ In the fifth line we see the previously analized line:
 ...80240035205007...
 ```
 It is worth mentioning that some instructions don't have the address explicitly
-indicated in the HEX file. The lengh of the previous instruction serves as the address
+indicated in the hex file. The lengh of the previous instruction serves as the address
 offset in that case. For example for the next instruction on the same line:
 ```
 ...901A5005...
@@ -265,5 +265,5 @@ offset in that case. For example for the next instruction on the same line:
 the offset will be 000000 + 4 (lenght of `mov`) which is correct as you can see in
 the main.lst code.
 
-Here ends the basic introduction to assembly and HEX, I hope now you have a better
+Here ends the basic introduction to assembly and hex, I hope now you have a better
 undestanding of how your MCU works!
