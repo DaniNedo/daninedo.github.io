@@ -22,7 +22,9 @@ number</a> using the slider and see the resulting effect.
     let mSlider;
 
     function setup() {
-        canvas = createCanvas(720, 400);
+        let canvasDiv = document.getElementById('simple-sketch-holder');
+        let width = canvasDiv.offsetWidth;
+        canvas = createCanvas(width, 400);
         canvas.parent('simple-sketch-holder');
         mSlider = createSlider(0, 200, 0);
         mSlider.position(40, 20);
