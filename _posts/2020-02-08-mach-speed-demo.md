@@ -6,7 +6,7 @@ tags: [p5js, JavaSript, Graphics]
 comments: true
 ---
 
-<div id="simple-sketch-holder"></div>
+<div id="simple-sketch-holder"></div>{: .center-block width="90%" :}
 <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js">ç</script>
 
 <script>
