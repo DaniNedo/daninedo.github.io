@@ -25,7 +25,7 @@ number using the slider and see the resulting effect.
         canvas = createCanvas(720, 400);
         canvas.parent('simple-sketch-holder');
         mSlider = createSlider(0, 200, 0);
-        mSlider.position(40, 20);
+        mSlider.position(40, 160);
         mSlider.style('width', '80px');
         mSlider.parent('simple-sketch-holder');
         speed = 0.4;
