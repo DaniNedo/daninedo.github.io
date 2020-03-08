@@ -5,37 +5,34 @@ subtitle: Look at those shock waves!
 tags: [p5js, JavaSript, Graphics]
 comments: true
 ---
+
 <div id="simple-sketch-holder"></div>
 <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
 
 <script>
-    "use strict";
- 
-    new p5(p => {
-    let mSlider;
-    
     let waves = [];
     let next;
     let speed;
-    
-    p.setup = () => {
-        p.createCanvas(700, 400);
-        mSlider = p.createSlider(0, 200, 0).size(80, p.AUTO);
-        mSlider.position(100, 300);
-        p.windowResized();
-        speed = 0.4;
-        next = 0;
-    };
-    
-    p.draw = () => {
-    p.background(200);
-    if (p.millis() > next) {
+
+    function setup() {
+    canvas = createCanvas(720, 400);
+    canvas.parent('simple-sketch-holder');
+    mSlider = createSlider(0, 200, 0);
+    mSlider.position(20, 100);
+    mSlider.style('width', '80px');
+    speed = 0.4;
+    next = 0;
+    }
+
+    function draw() {
+    background(200);
+    if (millis() > next) {
 
         // Add new particle
         waves.push(new Wave());
         
         // Schedule next circle
-        next = p.millis() + 500;
+        next = millis() + 500;
     }
 
     // Draw all paths
@@ -46,24 +43,14 @@ comments: true
         waves.splice(i,1);
         }
     }
-    p.text('Mach', mSlider.x + mSlider.width + 20, 35);
-    p.text(mSlider.value()/100, mSlider.x + mSlider.width + 55, 35);
-    };
-    
-    p.windowResized = () => {
-        p._renderer.position(p.windowWidth  - p.width  >> 1,
-                            p.windowHeight - p.height >> 1);
-    
-        const sliderX = (p.width  - mSlider.width  >> 4) + p._renderer.x,
-            sliderY = (p.height - mSlider.height >> 4) + p._curElement.y;
-    
-        mSlider.position(sliderX, sliderY);
-    };
-    
+    text('Mach', mSlider.x + mSlider.width + 20, 35);
+    text(mSlider.value()/100, mSlider.x + mSlider.width + 55, 35);
+    }
+
     class Wave {
     constructor() {
-        this.x = p.width/4;
-        this.y = p.height/2;
+        this.x = width/4;
+        this.y = height/2;
         this.diameter = 0;
         this.a = 1.2;
         this.lifespan = 255;
@@ -76,10 +63,9 @@ comments: true
     }
     
     display() {
-        p.stroke(0, this.lifespan);
-        p.fill(0,0);
-        p.ellipse(this.x, this.y, this.diameter, this.diameter);
+        stroke(0, this.lifespan);
+        fill(0,0);
+        ellipse(this.x, this.y, this.diameter, this.diameter);
     }
     }
-    });
 </script>
