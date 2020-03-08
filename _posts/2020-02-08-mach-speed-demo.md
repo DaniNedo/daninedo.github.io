@@ -21,6 +21,7 @@ comments: true
         mSlider = createSlider(0, 200, 0);
         mSlider.position(20, 100);
         mSlider.style('width', '80px');
+        slider.parent('simple-sketch-holder');
         speed = 0.4;
         next = 0;
     }
