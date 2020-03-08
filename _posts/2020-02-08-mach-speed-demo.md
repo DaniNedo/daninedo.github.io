@@ -4,11 +4,11 @@ title: Mach speed interactive demo
 subtitle: Look at those shock waves!
 tags: [p5js, JavaSript, Graphics]
 comments: true
-dependencies:
-    - p5
 ---
 
 <div id="simple-sketch-holder">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js">ç</script>
+
     <script>
         let waves = [];
         let next;
