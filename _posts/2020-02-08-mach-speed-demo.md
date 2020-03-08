@@ -18,7 +18,8 @@ comments: true
         canvas = createCanvas(720, 400);
         canvas.parent('simple-sketch-holder');
         mSlider = createSlider(0, 200, 0);
-        mSlider.position(20, 20);
+        mSlider.position(20, 100);
+        mSlider.style('width', '80px');
         speed = 0.4;
         next = 0;
         }
