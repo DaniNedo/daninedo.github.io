@@ -7,7 +7,7 @@ comments: true
 ---
 
 <div id="simple-sketch-holder"></div>
-<!--<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
 
 <script>
     let waves = [];
@@ -21,7 +21,7 @@ comments: true
         mSlider = createSlider(0, 200, 0);
         mSlider.position(20, 100);
         mSlider.style('width', '80px');
-        slider.parent('simple-sketch-holder');
+        mSlider.parent('simple-sketch-holder');
         speed = 0.4;
         next = 0;
     }
