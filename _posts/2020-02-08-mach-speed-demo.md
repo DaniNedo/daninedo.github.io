@@ -6,8 +6,8 @@ tags: [p5js, JavaSript, Graphics]
 comments: true
 ---
 
-<div id="simple-sketch-holder"></div>{: .center-block width="90%" :}
-<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js">ç</script>
+<div id="simple-sketch-holder"></div>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
 
 <script>
     let waves = [];
@@ -15,7 +15,7 @@ comments: true
     let speed;
 
     function setup() {
-    canvas = createCanvas(windowWidth, windowHeight);
+    canvas = createCanvas(720, 400);
     canvas.parent('simple-sketch-holder');
     mSlider = createSlider(0, 200, 0);
     mSlider.position(20, 100);
