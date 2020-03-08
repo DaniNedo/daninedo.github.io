@@ -15,7 +15,7 @@ dependencies:
         let speed;
 
         function setup() {
-        createCanvas(720, 400);
+        canvas = createCanvas(720, 400);
         canvas.parent('simple-sketch-holder');
         mSlider = createSlider(0, 200, 0);
         mSlider.position(20, 20);
