@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Mach speed interative demo
+title: Mach speed interactive demo
 subtitle: Look at those shock waves!
 tags: [p5js, JavaSript, Graphics]
 comments: true
@@ -10,9 +10,8 @@ customjs:
 
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
-    <script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"><br/></script>
+    <script><br/>
         let waves = [];
         let next;
         let speed;
