@@ -8,7 +8,7 @@ comments: true
 
 <html>
   <head>
-    <div style="display: block"></div>
+    <div id="sketch-holder"></div>
 
     Mach number demostration
 
