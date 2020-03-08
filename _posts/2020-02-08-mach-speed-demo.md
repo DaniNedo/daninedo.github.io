@@ -9,13 +9,14 @@ dependencies:
 ---
 
 <div id="simple-sketch-holder">
-    <script type="text/javascript">
+    <script>
         let waves = [];
         let next;
         let speed;
 
         function setup() {
         createCanvas(720, 400);
+        canvas.parent('simple-sketch-holder');
         mSlider = createSlider(0, 200, 0);
         mSlider.position(20, 20);
         speed = 0.4;
