@@ -34,7 +34,7 @@ number</a> using the slider and see the resulting effect.
         mSlider.style('width', '80px');
         mSlider.parent('simple-sketch-holder');
         checkbox = createCheckbox('', false);
-        checkbox.parent('simple-sketch-horder');
+        checkbox.parent('simple-sketch-holder');
         checkbox.position(210,22);
         speed = 0.4;
         next = 0;
