@@ -35,7 +35,7 @@ number</a> using the slider and see the resulting effect.
         mSlider.parent('simple-sketch-holder');
         checkbox = createCheckbox('', false);
         checkbox.parent('simple-sketch-holder');
-        checkbox.position(215,20);
+        checkbox.position(215,18);
         speed = 0.4;
         next = 0;
     }
@@ -78,6 +78,9 @@ number</a> using the slider and see the resulting effect.
           checkbox.attribute('disabled', ''); 
           noStroke();
           fill(150);
+          if(checkbox.checked()){
+            text('-', mSlider.x + mSlider.width + 185, 35);
+          }
         }
         text('Mach angle', mSlider.x + mSlider.width + 115, 35);
     }
@@ -179,6 +182,9 @@ delays, here goes the code:
           checkbox.attribute('disabled', ''); 
           noStroke();
           fill(150);
+          if(checkbox.checked()){
+            text('-', mSlider.x + mSlider.width + 185, 35);
+          }
         }
         text('Mach angle', mSlider.x + mSlider.width + 115, 35);
     }
