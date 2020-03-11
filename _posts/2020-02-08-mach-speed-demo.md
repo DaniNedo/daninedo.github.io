@@ -34,6 +34,7 @@ number</a> using the slider and see the resulting effect.
         mSlider.style('width', '80px');
         mSlider.parent('simple-sketch-holder');
         checkbox = createCheckbox('', false);
+        checkbox.parent('simple-sketch-horder');
         checkbox.position(210,22);
         speed = 0.4;
         next = 0;
@@ -71,7 +72,6 @@ number</a> using the slider and see the resulting effect.
           checkbox.removeAttribute('disabled');
           if(checkbox.checked()){
             text(nf(angle,0,2), mSlider.x + mSlider.width + 185, 35);
-            stroke(0);
           }
         }
         else{
