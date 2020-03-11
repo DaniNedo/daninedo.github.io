@@ -20,6 +20,8 @@ number</a> using the slider and see the resulting effect.
     let next;
     let speed;
     let mSlider;
+    let angle;
+    let mach;
 
     function setup() {
         let canvasDiv = document.getElementById('simple-sketch-holder');
@@ -53,8 +55,29 @@ number</a> using the slider and see the resulting effect.
             waves.splice(i,1);
             }
         }
+        
+        mach = mSlider.value()/100;
+      
+        noStroke();
+        fill(0);
         text('Mach', mSlider.x + mSlider.width + 20, 35);
-        text(mSlider.value()/100, mSlider.x + mSlider.width + 55, 35);
+        text(mach, mSlider.x + mSlider.width + 55, 35);
+        
+        if(mach >= 1){
+          angle = degrees(asin(1/mach));
+          checkbox.removeAttribute('disabled');
+          if(checkbox.checked()){
+            text(nf(angle,0,2), mSlider.x + mSlider.width + 185, 35);
+            stroke(0);
+          }
+          
+        }
+        else{
+          checkbox.attribute('disabled', ''); 
+          noStroke();
+          fill(150);
+        }
+        text('Mach angle', mSlider.x + mSlider.width + 115, 35);
     }
 
     class Wave {
