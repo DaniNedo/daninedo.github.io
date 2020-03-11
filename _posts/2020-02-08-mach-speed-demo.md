@@ -35,7 +35,7 @@ number</a> using the slider and see the resulting effect.
         mSlider.parent('simple-sketch-holder');
         checkbox = createCheckbox('', false);
         checkbox.parent('simple-sketch-holder');
-        checkbox.position(210,22);
+        checkbox.position(215,20);
         speed = 0.4;
         next = 0;
     }
@@ -113,7 +113,7 @@ the JS scripts, they are executed directly in your favourite browser. Without fu
 delays, here goes the code:
 
 {% highlight js linenos %}
-<div id="simple-sketch-holder"></div>
+<div id="simple-sketch-holder" style="position: relative"></div>
 <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
 
 <script>
@@ -121,14 +121,22 @@ delays, here goes the code:
     let next;
     let speed;
     let mSlider;
+    let checkbox;
+    let angle;
+    let mach;
 
     function setup() {
-        canvas = createCanvas(720, 400);
+        let canvasDiv = document.getElementById('simple-sketch-holder');
+        let width = canvasDiv.offsetWidth;
+        canvas = createCanvas(width, 400);
         canvas.parent('simple-sketch-holder');
         mSlider = createSlider(0, 200, 0);
         mSlider.position(40, 20);
         mSlider.style('width', '80px');
         mSlider.parent('simple-sketch-holder');
+        checkbox = createCheckbox('', false);
+        checkbox.parent('simple-sketch-holder');
+        checkbox.position(215,20);
         speed = 0.4;
         next = 0;
     }
@@ -149,11 +157,30 @@ delays, here goes the code:
             waves[i].update();
             waves[i].display();
             if(waves[i].lifespan <= 0){
-            waves.splice(i,1);
+                waves.splice(i,1);
             }
         }
+        
+        mach = mSlider.value()/100;
+      
+        noStroke();
+        fill(0);
         text('Mach', mSlider.x + mSlider.width + 20, 35);
-        text(mSlider.value()/100, mSlider.x + mSlider.width + 55, 35);
+        text(mach, mSlider.x + mSlider.width + 55, 35);
+        
+        if(mach >= 1){
+          angle = degrees(asin(1/mach));
+          checkbox.removeAttribute('disabled');
+          if(checkbox.checked()){
+            text(nf(angle,0,2), mSlider.x + mSlider.width + 185, 35);
+          }
+        }
+        else{
+          checkbox.attribute('disabled', ''); 
+          noStroke();
+          fill(150);
+        }
+        text('Mach angle', mSlider.x + mSlider.width + 115, 35);
     }
 
     class Wave {
