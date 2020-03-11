@@ -20,6 +20,7 @@ number</a> using the slider and see the resulting effect.
     let next;
     let speed;
     let mSlider;
+    let checkbox;
     let angle;
     let mach;
 
@@ -32,6 +33,7 @@ number</a> using the slider and see the resulting effect.
         mSlider.position(40, 20);
         mSlider.style('width', '80px');
         mSlider.parent('simple-sketch-holder');
+        checkbox = createCheckbox('', false);
         speed = 0.4;
         next = 0;
     }
@@ -52,7 +54,7 @@ number</a> using the slider and see the resulting effect.
             waves[i].update();
             waves[i].display();
             if(waves[i].lifespan <= 0){
-            waves.splice(i,1);
+                waves.splice(i,1);
             }
         }
         
@@ -70,7 +72,6 @@ number</a> using the slider and see the resulting effect.
             text(nf(angle,0,2), mSlider.x + mSlider.width + 185, 35);
             stroke(0);
           }
-          
         }
         else{
           checkbox.attribute('disabled', ''); 
