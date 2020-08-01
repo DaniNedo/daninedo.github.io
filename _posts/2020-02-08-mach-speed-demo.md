@@ -110,9 +110,9 @@ number</a> using the slider and see the resulting effect.
 ### The code
 In this post I'm not getting into detail about how JavaScript or p5* work, but you
 can think of JavaScript as the C++ for web development. In fact, the syntax is very
-similar to C/C++, so if you know any of these lenguages you can start programming in
-JavaScript relatively easily. You don't need any specific environment to exectue
-the JS scripts, they are executed directly in your favourite browser. Without further
+similar to C/C++, so if you know any of these languages you can start programming in
+JavaScript relatively easily. You don't need any specific environment to execute
+the JS scripts, they are executed directly in your favorite browser. Without further
 delays, here goes the code:
 
 {% highlight js linenos %}

@@ -28,9 +28,10 @@ guaranteed to work for up to 100 flash cycles. If you need to buy one I suggest 
 to get the STM8S103F3P6 instead, it supports up to 10000 flash cycles and you can
 find it with the same breakout board.
 
-Together with it we sould get the Datasheet and the Reference Manual. Those are
-indispensable files for being able to program the microcontroller and I would recommend
-having them on hand during the reading.
+Together with it we should get the [Datasheet](https://www.st.com/resource/en/datasheet/stm8s003f3.pdf)
+and the [Reference Manual](https://www.st.com/resource/en/reference_manual/cd00190271-stm8s-series-and-stm8af-series-8bit-microcontrollers-stmicroelectronics.pdf). 
+Those are indispensable files for being able to program the microcontroller and 
+I would recommend having them on hand during the reading.
 
 ## Bare metal programming
 In these articles we are not going to use any libraries apart from those that come with
@@ -40,8 +41,8 @@ microcontroller without using any API or hardware abstraction layers.
 This approach is almost at the bottom of the low level human-readable codes, preceded
 probably only by code written in [Assembly Language](https://en.wikipedia.org/wiki/Assembly_language).
 Then of course there is [Machine Code](https://simple.wikipedia.org/wiki/Machine_code),
-that has hexadecimal or binary formats and it is not readble by humans.
-Although a bit intimidating for a begginer, it is a good way to undestad what
+that has hexadecimal or binary formats and it is not readable by humans.
+Although a bit intimidating for a beginner, it is a good way to understand what
 is really going on.
 
 ### Pointers
@@ -66,13 +67,13 @@ uint8_t *ptr = &var; // ptr stores var's address
 
 ### Memory
 When programming we don't usually know what memory addresses are used, and we don't really
-care as long as everything is inside the proper boundries. However, to interact with the
+care as long as everything is inside the proper boundaries. However, to interact with the
 hardware we actually need to know "some" specific memory addresses to access the so called
 Special Function Registers (SFR). This registers are presented in the datasheet and
 explained in detail in the reference manual.
 
 In the page 30 of our target microcontroller's datasheet the memory map is shown, and we
-can see that the SFR addresses for GPIO and peripherials go from `0x005000` up to `0x0057FF`:
+can see that the SFR addresses for GPIO and peripherals go from `0x005000` up to `0x0057FF`:
 
 ![Memory map](/img/gpiomemorymap.jpg){: .center-block width="50%" :}
 
@@ -98,7 +99,7 @@ More information about the GPIO can be found in the datasheet (page 25):
 We need to pay attention to the bottom note: Pins marked with a "T" are
 true open drain, and there's no protection diode to VDD nor P-Buffer implemented.
 What this means is that the pin state can only be Low (connected to GND) or floating
-(high impedance) and we need to be extra carefull with the voltage applied to them.
+(high impedance) and we need to be extra careful with the voltage applied to them.
 
 ![STM8 GPIO Implementation](/img/gpioblockdiagram.JPG){: .center-block width="90%" :}
 
@@ -118,7 +119,7 @@ GPIO have various configuration options that can be set through these registers:
 - Input Data Register (IDR)
 
 We need to setup PB5 as an open drain output. In the reference manual (page 107)
-all the posible configurations are presented:
+all the possible configurations are presented:
 
 ![Port configuration](/img/portconfig.JPG){: .center-block width="90%" :}
 
@@ -133,7 +134,7 @@ the addresses for the necessary registers:
 The addresses we are interested in are `0x005000` for `ODR` and `0x005007` for `DDR`.
 
 ### The code
-To start with, we need to create a blank main.c file using our prefered text editor.
+To start with, we need to create a blank main.c file using our preferred text editor.
 I suggest keeping the files organized and using on folder per example. The code
 for this tutorials is available on [Github](https://github.com/DaniNedo/stm8).
 
@@ -184,9 +185,9 @@ void main(){
 {% endhighlight %}
 
 ### Compiling the code
-To compile the code we are going to use the SDCC from the Comand Line Interface.
+To compile the code we are going to use the SDCC from the Command Line Interface.
 Open `cmd.exe` on Windows or `bash` on Unix and navigate to the folder that contains
-your `main.c` file using `cd` and `dir` comands.
+your `main.c` file using `cd` and `dir` commands.
 Tip: [How to navigate in CMD](https://riptutorial.com/cmd/example/8646/navigating-in-cmd).
 
 Now execute the following command to start the compilation:
@@ -240,7 +241,7 @@ two ways:
 Start the GUI and go to _Configure_ -> _Configure ST Visual Programmer_, then select ST-LINK as
 _Hardware_, SWIM as _Port_, and your microcontroller model in _Device_, in my case STM8S003F3.
 Next go to _File_ -> _Open..._ and select the .hex file and finally go to _Program_ and press
-_Current Tab_. At this point the buil-in LED of your board should start blinking.
+_Current Tab_. At this point the build-in LED of your board should start blinking.
 
 #### Using the STVP_CmdLine
 Open the CMD and again make sure that you are in the project folder, then execute:

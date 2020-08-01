@@ -14,7 +14,7 @@ some other files to understand what is happening under the hood.
 
 To begin with let's quickly explain how the code is ran in the microcontroller.
 
-## Arquitecture
+## Architecture
 The very basic building blocks of a microcontroller or even a computer are the
 Central Processing Unit (CPU) and the Memory. The memory stores the data and the
 CPU processes it.
@@ -26,15 +26,15 @@ the results of its operations and the Control Unit (CU) that manages all the pro
 The different components are linked together by one or more Data Buses.
 
 ## Computer Instructions
-In order to make something to happen, hopefully what is writen in our code, we
+In order to make something to happen, hopefully what is written in our code, we
 need to tell the CPU where to get the data and how to process it. This is done using
 Instructions, which are a representation of a real physical process, you can think of
 them as the last frontier between firmware and hardware. They are an array of bits called
 operation code (OP code) composed of an identifier and some arguments that can be data or memory locations.
 
-Instructions can be strored in the same memory as the data and
-the program (Von-Neumann Arquitecture), or in their independent memory (Harvard Arquitecture).
-Our STM8 uses a modified version of Harvard Arquitecture with a Reduced Instruction Set (RISC).
+Instructions can be stored in the same memory as the data and
+the program (Von-Neumann Architecture), or in their independent memory (Harvard Architecture).
+Our STM8 uses a modified version of Harvard Architecture with a Reduced Instruction Set (RISC).
 
 ## Program execution
 When an instruction is called by the CU, the different data paths that connect the
@@ -63,7 +63,7 @@ CU and decoded. After that the DS and RS gates are set according to the argument
 of the instruction and the value of 0x3A (x) is loaded into the register 0x10.
 
 In our model this operation takes just 1 clock cycle (in a real case this can be different)
-and it happens almost inmediately if we ignore the propagation delay of the hardware.
+and it happens almost immediately if we ignore the propagation delay of the hardware.
 Also we are making the assumption that the parallel bus is as wide as the registers so
 that the data can be copied in one go.
 
@@ -75,16 +75,16 @@ and the previous process is repeated.
 ### Step 3: Adding the values
 ![add values](/img/computer_diag_adding.png)
 Next the Add instruction is executed. This time the data bus is not used, instead
-the the proccess registers 0x10 and 0x11 are passed to the ALU and the
+the the process registers 0x10 and 0x11 are passed to the ALU and the
 result is stored into the 0x12 register. In our case, the ALU can only perform addition,
 so we only have to set the enable pin (EN) to perform the operation.
 
 ### Step 4: Storing the result
 ![store result](/img/computer_diag_storing.png)
-Finally the last instuction is executed and the result value stored in the process
+Finally the last instruction is executed and the result value stored in the process
 register is copied to the memory.
 
-As you can see with this simple example the proccess is quite straigh forward. Of
+As you can see with this simple example the process is quite straight forward. Of
 course you have to take into account that a real microcontroller or computer is
 much more complex, and includes many more instructions to perform arithmetics,
 logic and conditional jumps... but this can serve as a good base to understand how
@@ -93,10 +93,10 @@ things work.
 ## The machine code
 When we executed the compiler last time many files were generated including the
 _main.asm_ file. The .asm extension stands for [Assembly Language](https://en.wikipedia.org/wiki/Assembly_language)
-and it is a lenguage that explicitly shows the instructions that compose a program
+and it is a language that explicitly shows the instructions that compose a program
 in a format that a human can read.
 
-In the _main.asm_ file our blinky code starts at the line 90. The lines prior to
+In the _main.asm_ file our blink code starts at the line 90. The lines prior to
 it are initializations for the microcontroller.
 
 ```
@@ -125,9 +125,9 @@ In this bit of code we can differentiate a few elements:
 
 ### Reading the assembly code
 The comments give us a general idea of that is happening next, but we are going
-analize the code in detail to understand it better. Keep in mind that as many other
+analyze the code in detail to understand it better. Keep in mind that as many other
 languages, this is executed from top to bottom line by line, furthermore I suggest
-you keeping the blinky _main.c_ code on hand and getting a copy of the the STM8
+you keeping the blink _main.c_ code on hand and getting a copy of the the STM8
 [Programming Manual](https://www.st.com/content/ccc/resource/technical/document/programming_manual/43/24/13/9a/89/df/45/ed/CD00161709.pdf/files/CD00161709.pdf/jcr:content/translations/en.CD00161709.pdf)
 where you can find what the different instructions do. I guarantee the previous
 code already can be much clearer if you just understand the meaning of the acronyms.
@@ -156,7 +156,7 @@ Another tag to indicate where the _while_ loop starts.
 	bcpl	20485, #5
 ```
 `bcpl` (Bit Complement) flips the nth bit of a memory address provided. In
-this case the 5th bit of the memory address `20485` is fliped. Again, the address
+this case the 5th bit of the memory address `20485` is flipped. Again, the address
 is not arbitrary, converted to hex it is 0x5005 which is the address of the
 PB_ODR.
 
@@ -165,7 +165,7 @@ Next the _for_ loop structure starts and it's composed of few lines.
 ;main.c: 10: for(int i = 0; i < 30000; i++){;}
 	clrw	x
 ```
-`clrw` (Clear word) clears the content of the proccess register x. More info about
+`clrw` (Clear word) clears the content of the process register x. More info about
 the process registers can be found in the section **3.2 CPU registers** of the
 programming manual.
 ```
@@ -185,8 +185,8 @@ checks if the logic [XOR](https://en.wikipedia.org/wiki/Exclusive_or)
 operation between `N` and `V` and jumps to the `00103$` tag if the result is 0.
 
 But why the XOR of `N` and `V` has to be zero? I was trying to answer this question
-for about a week, making binary subtractions, analizing all the necesary bits but nothing
-made much sense to me. Then I found [this article](http://teahlab.com/4-Bit_Signed_Comparator/) that shows how a multibit comparator works, I recommend you checking it to understand why `N` and `V` flags are used.
+for about a week, making binary subtractions, analyzing all the necessary bits but nothing
+made much sense to me. Then I found [this article](http://teahlab.com/4-Bit_Signed_Comparator/) that shows how a multi-bit comparator works, I recommend you checking it to understand why `N` and `V` flags are used.
 The easiest explanation to our initial question (based on the article) is that XOR is used because
 the "Greater or Equal" case is the complementary of the "Less" case, this being `N XOR V = 1`.
 Basically we testing for `x` not being less than the specific value.
@@ -195,7 +195,7 @@ If we haven't jumped to `00103$` the `incw` (Increase word) instruction is calle
 the content of `x` is increased by one and the `jra` (Jump Relative Always) causes
 the program to jump to the `00106$` tag.
 
-In the end of the program we see a `ret` (Return from subrutine), which returns from
+In the end of the program we see a `ret` (Return from subroutine), which returns from
 the main to the caller. However this instruction won't be ever executed because
 we are in an infinite _while_ loop.
 
@@ -227,12 +227,12 @@ is a direct translation from the assembly.
 000011 81               [ 4]  105 	ret
 ```
 In the section **7.4 Instruction Set** of the P.M. we can identify all the OP codes of the instructions, let's
-analize, for example, the line 93 of the _main.lst_ file:
+analyze, for example, the line 93 of the _main.lst_ file:
 ```
 000000 35 20 50 07      [ 1]   92 	mov	0x5007+0, #0x20
 ```
 We already know what this line does and now if we look at the OP code for the `mov`
-instruction is easy to decode the hex bytes at the begining of the line.
+instruction is easy to decode the hex bytes at the beginning of the line.
 `00000` is the address offset added to the base address which the `.area Code` indicates.
 This base value (`00008024`) can be find in the _main.map_ file.
 
@@ -252,18 +252,18 @@ Finally we can take a look at the _main.hex_ file:
 :02803400F881D1
 :00000001FF
 ```
-In the fifth line we see the previously analized line:
+In the fifth line we see the previously analyzed line:
 ```
 ...80240035205007...
 ```
 It is worth mentioning that some instructions don't have the address explicitly
-indicated in the hex file. The lengh of the previous instruction serves as the address
+indicated in the hex file. The length of the previous instruction serves as the address
 offset in that case. For example for the next instruction on the same line:
 ```
 ...901A5005...
 ```
-the offset will be 000000 + 4 (lenght of `mov`) which is correct as you can see in
+the offset will be 000000 + 4 (length of `mov`) which is correct as you can see in
 the main.lst code.
 
 Here ends the basic introduction to assembly and hex, I hope now you have a better
-undestanding of how your MCU works!
+understanding of how your MCU works!
