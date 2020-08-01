@@ -2,7 +2,7 @@
 layout: post
 title: Introduction to machine language
 subtitle: Speaking to the microcontroller!
-gh-repo: daninedo/stm8
+gh-repo: daninedo/stm8-tutorial
 gh-badge: [star, fork, follow]
 tags: [STM, SMT8, Assembly, C]
 comments: true

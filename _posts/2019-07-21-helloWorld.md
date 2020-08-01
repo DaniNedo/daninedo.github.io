@@ -2,7 +2,7 @@
 layout: post
 title: Hello, World! on the STM8
 subtitle: The bare metal approach
-gh-repo: daninedo/stm8
+gh-repo: daninedo/stm8-tutorial
 gh-badge: [star, fork, follow]
 tags: [STM, SMT8, SMT8S, SDCC, C, Hello World]
 comments: true

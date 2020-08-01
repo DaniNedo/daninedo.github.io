@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Setting up a programming 
-subtitle: ...on Windows and not die trying.
-gh-repo: daninedo/stm8
+title: Set up a dev environment for STM8
+subtitle: ...on Windows and don't die trying
+gh-repo: daninedo/stm8-tutorial
 gh-badge: [star, fork, follow]
 tags: [STM, SMT8, SMT8S SDCC, Make, C, STVP, Windows]
 comments: true
