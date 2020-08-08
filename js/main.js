@@ -7,7 +7,6 @@ var main = {
 
   init : function() {
     // Shorten the navbar after scrolling a little bit down
-    $(".navbar").addClass("top-nav-short");
     $(window).scroll(function() {
         if ($(".navbar").offset().top > 50) {
             // $(".navbar").addClass("top-nav-short");
