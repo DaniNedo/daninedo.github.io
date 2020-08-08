@@ -1,7 +1,10 @@
 # --- General options --- #
 
+# <meta name="theme-color" content="#3e82f7">
+theme-color: "#274b5d"
 # Name of website
 title: DaniNedo's stuff
+
 
 # Short description of your site
 description: Embedded & Web projects
