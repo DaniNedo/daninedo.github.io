@@ -7,12 +7,13 @@ var main = {
 
   init : function() {
     // Shorten the navbar after scrolling a little bit down
+    $(".navbar").addClass("top-nav-short");
     $(window).scroll(function() {
         if ($(".navbar").offset().top > 50) {
-            $(".navbar").addClass("top-nav-short");
+            // $(".navbar").addClass("top-nav-short");
             $(".navbar-custom .avatar-container").fadeOut(500);
         } else {
-            $(".navbar").removeClass("top-nav-short");
+            // $(".navbar").removeClass("top-nav-short");
             $(".navbar-custom .avatar-container").fadeIn(500);
         }
     });
