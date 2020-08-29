@@ -184,6 +184,7 @@ void main(){
 }
 {% endhighlight %}
 
+
 ### Compiling the code
 To compile the code we are going to use the SDCC from the Command Line Interface.
 Open `cmd.exe` on Windows or `bash` on Unix and navigate to the folder that contains
