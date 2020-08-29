@@ -20,7 +20,7 @@ Furthermore, using of the shelf HALs might have some disadvantages. One of the m
 ## Defining the interface
 We are going to start with the blink code we wrote on a previous post. This example just set up the 5th pin of the port B as an open drain output and then jumped into an endless loop which continuously toggled the selected pin, waiting some milliseconds between loops thanks to a rudimentary delay.
 
-{% highlight cpp linenos %}
+{% highlight c linenos %}
 #define PB_ODR *(volatile char*)0x5005
 #define PB_DDR *(volatile char*)0x5007
 
@@ -116,7 +116,7 @@ In this last case the reference to the GPIO handle needs to be passed: `foo(&POR
 
 Let's make a quick sketch see if all the alternatives work:
 
-{% highlight c%}
+{% highlight c linenos %}
 #include <stdint.h>
 
 /* Port base address */
@@ -263,7 +263,7 @@ typedef enum { PIN_0, PIN_1, PIN_2, PIN_3, PIN_4, PIN_5, PIN_6, PIN_7 } PIN_t;
 Now we have a way to reference all the GPIO using their port and pin.
 
 ### Adding helper functions
-Last time, in our blink code we manipulated the GPIO manually using bitwise operations over the GPIO registers directly. We cannot change that much about that, but we can create a set of small functions that make our code much more readable and less repetitive.
+In our previous blink code we manipulated the GPIO manually using bitwise operations over the GPIO registers directly. We cannot change much about that, but we can create a set of small functions that make our code much more readable and less repetitive.
 ```
 /* Pin modes */
 typedef enum { INPUT, INPUT_PULLUP, OUTPUT, OUTPUT_OPEN_DRAIN } GPIO_MODE_t;
@@ -304,7 +304,7 @@ bool gpio_read(PORT_t port, PIN_t pin){
 
 ## Testing the interface
 Let's test our brand new interface rewriting the blink example:
-{% highlight c%}
+{% highlight c linenos %}
 #include <stdint.h>
 #include <stdbool.h>
 
