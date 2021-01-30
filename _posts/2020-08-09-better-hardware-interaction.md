@@ -386,3 +386,13 @@ void main(){
 {% endhighlight %}
 
 And that's it! Our LED should be blinking as good as before, but now it is easier to read and maintain the code.
+
+
+
+```c {.line-numbers}
+#define HELLO 10
+
+int main (){
+    return 0;
+}
+```
