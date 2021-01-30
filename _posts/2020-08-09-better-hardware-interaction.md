@@ -389,7 +389,7 @@ And that's it! Our LED should be blinking as good as before, but now it is easie
 
 
 
-```c {: .lineno}
+```c
 #define HELLO 10
 
 int main (){
