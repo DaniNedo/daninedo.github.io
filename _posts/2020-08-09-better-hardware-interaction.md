@@ -42,7 +42,7 @@ It make sense to do a list with all the features we want to include in our inter
 
 ![Port configuration](/img/portconfig.JPG){: .center-block width="90%" :}
 
-It would be nice set the pin as an input (with and without pull-up resistors) or as an output (push-pull or open drain). For now we won't worry about interrupts and the fast mode. Then of course we need a way to read and set the state of the pins depending on their mode.
+It would be nice to be able to set the pin as an input (with and without pull-up resistors) or as an output (push-pull or open drain). For now we won't worry about interrupts and the fast mode. Then of course we need a way to read and set the state of the pins depending on their mode.
 
 ## Writing the interface
 ### Accessing the GPIO registers
@@ -96,15 +96,15 @@ Next comes the trickiest part, at least to me. We need to define a set of variab
 ```
 volatile PORT_t * PORT_A = (PORT_t*)PA_BASE_ADDRESS;
 ```
-You can se we use the `volatile`keyword so that the compiler knows that the variable value stored in that specific memory location can change on its own and doesn't try to optimize it.
+You can se we use the `volatile` keyword so that the compiler knows that the variable value stored in that specific memory location can change on its own and doesn't try to optimize it.
 
 In this other [post](https://blog.feabhas.com/2019/01/peripheral-register-access-using-c-structs-part-1/) about using C's structs to access peripheral registers, the author also includes the `const` keyword in the declaration of the port handle:
 ```
 volatile PORT_t * const PORT_A = (PORT_t*)PA_BASE_ADDRESS;
 ```
-Wait a second... `const`? Isn't this keyword used for constant elements? Well, indeed `const` is used for values but here we are not saying that the register value is going to be constant, rather that the address to which the pointer points to will remain constant, even if the value of the register. If you are interested in this topic [this article](https://www.embedded.com/combining-cs-volatile-and-const-keywords/) explains it quite well.
+Wait a second... `const`? Isn't this keyword used for constant elements? Well, indeed `const` is used for values but here we are not saying that the register value is going to be constant, rather that the address to which the pointer points to will remain constant, even if the value of the register changes. If you are interested in this topic [this article](https://www.embedded.com/combining-cs-volatile-and-const-keywords/) explains it quite well.
 
-There are other ways to declare the `port`handle, as a `#define`:
+There are other ways to declare the `port` handle, as a `#define`:
 ```
 #define PORT_A (volatile PORT_t*)PA_BASE_ADDRESS
 ```
@@ -147,6 +147,7 @@ void main(){
     foo(&PORT_A_using_at);
 }
 {% endhighlight %}
+
 Executing the command below form the terminal compiles the sketch, and we see that it does so without throwing errors:
 ```
 sdcc -mstm8 --out-fmt-ihx --std-sdcc11 main.c
@@ -158,22 +159,21 @@ Notice that `foo()`expects a pointer of type `PORT_t`, there are several reasons
 
 Let's compare the different alternatives first checking if and how the port handles are stored in memory:
 ```
-                                8 ;--------------------------------------------------------
+                                8 ;----------------------------------
                                 9 ; Public variables in this module
-                               10 ;--------------------------------------------------------
+                               10 ;----------------------------------
                                11 	.globl _PORT_A_pointer_const
                                12 	.globl _main
                                13 	.globl _foo
                                14 	.globl _PORT_A_pointer
                                15 	.globl _PORT_A_using_at
-                               16 ;--------------------------------------------------------
-                               17 ; ram data
-                               18 ;--------------------------------------------------------
+                               16 ;----------------------------------
+                               18 ;----------------------------------
                                19 	.area DATA
                     005000     20 _PORT_A_using_at	=	0x5000
-                               21 ;--------------------------------------------------------
+                               21 ;----------------------------------
                                22 ; ram data
-                               23 ;--------------------------------------------------------
+                               23 ;----------------------------------
                                24 	.area INITIALIZED
 000001                         25 _PORT_A_pointer::
 000001                         26 	.ds 2
@@ -186,7 +186,7 @@ Let's compare the different alternatives first checking if and how the port hand
 008026                        138 __xinit__PORT_A_pointer:
 008026 50 00                  139 	.dw #0x5000
 ```
-We see that the *pointer* alternative behaves as a normal initialized variable and use RAM (line 14) and flash (line 139) whereas the *const pointer* uses only fash (line 136). The *#define* "doesn't use" memory at all as the preprocessor just writes the value of the *#define* each time it is referenced. Finally, *__at()* although it seems that it uses RAM (line 20), the compiler treats it in a similar way as with *#define*.
+We see that the *pointer* alternative behaves as a normal initialized variable and uses RAM (line 14) and flash (line 139) whereas the *const pointer* uses only fash (line 136). The *#define* "doesn't use" memory at all as the preprocessor just writes the value of the *#define* each time it is referenced. Finally, *__at()* although it seems that it uses RAM (line 20), the compiler treats it in a similar way as with *#define*.
 
 Next let's look at the main section of the program:
 ```
@@ -304,7 +304,7 @@ bool gpio_read(PORT_t port, PIN_t pin){
 
 ## Testing the interface
 Let's test our brand new interface rewriting the blink example:
-{% highlight c linenos %}
+{% highlight c linenos linenostart=10 %}
 #include <stdint.h>
 #include <stdbool.h>
 
