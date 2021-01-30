@@ -304,7 +304,7 @@ bool gpio_read(PORT_t port, PIN_t pin){
 
 ## Testing the interface
 Let's test our brand new interface rewriting the blink example:
-{% highlight c linenos linenostart=10 %}
+{% highlight c linenos startinline=10 %}
 #include <stdint.h>
 #include <stdbool.h>
 
