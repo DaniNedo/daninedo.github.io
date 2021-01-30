@@ -162,6 +162,12 @@ paginate: 5
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    span:
+      line_numbers: false
+    block:
+      line_numbers: true
+      start_line: 10
 
 # Default YAML values (more information on Jekyll's site)
 defaults:
