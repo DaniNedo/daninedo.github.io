@@ -393,6 +393,6 @@ And that's it! Our LED should be blinking as good as before, but now it is easie
 #define HELLO 10
 
 int main (){
-    return 0;
+    return 0;// changed
 }
 ```
