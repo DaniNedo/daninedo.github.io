@@ -25,7 +25,6 @@ description: Embedded & Web projects
 navbar-links:
   Blog: ".."
   About Me: "aboutme"
-  Home: "home"
 
 # Image to show in the navigation bar - image must be a square (width = height)
 # Remove this parameter if you don't want an image in the navbar
@@ -156,19 +155,16 @@ title-separator: "-"
 # Output options (more information on Jekyll's site)
 timezone: "Europe/Madrid"
 markdown: kramdown
-#highlighter: rouge
+kramdown:
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
+highlighter: rouge
 permalink: /:year-:month-:day-:title/
 paginate: 5
 
 kramdown:
   input: GFM
-  syntax_highlighter: rouge
-  syntax_highlighter_opts:
-    span:
-      line_numbers: false
-    block:
-      line_numbers: true
-      start_line: 10
 
 # Default YAML values (more information on Jekyll's site)
 defaults:

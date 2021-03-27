@@ -304,7 +304,7 @@ bool gpio_read(PORT_t port, PIN_t pin){
 
 ## Testing the interface
 Let's test our brand new interface rewriting the blink example:
-{% highlight c linenos start_line: 10 %}
+{% highlight c linenos startinline=10 %}
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -393,6 +393,6 @@ And that's it! Our LED should be blinking as good as before, but now it is easie
 #define HELLO 10
 
 int main (){
-    return 0;// changed
+    return 0;
 }
 ```
