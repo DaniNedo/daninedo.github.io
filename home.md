@@ -4,13 +4,8 @@ title: Home
 ---
 Test
 
+![ST-LINK](/img/stlink.jpg)
 
-<div class="col-sm">
-  One of three columns
-</div>
-<div class="col-sm">
-  One of three columns
-</div>
-<div class="col-sm">
-  One of three columns
-</div>
+| STM8 | SMT32 | ATMega|
+|-------|---|---|
+| ![ST-LINK](/img/stlink.jpg) | ![ST-LINK](/img/stlink.jpg)  | ![ST-LINK](/img/stlink.jpg)  |
