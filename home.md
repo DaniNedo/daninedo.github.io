@@ -1,7 +1,8 @@
 ---
-layout: page
+layout: default
 title: Home
 ---
+Test
 
 <div class="container">
   <div class="row">
