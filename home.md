@@ -1,19 +1,16 @@
 ---
-layout: default
+layout: page
 title: Home
 ---
 Test
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm">
-      One of three columns
-    </div>
-    <div class="col-sm">
-      One of three columns
-    </div>
-    <div class="col-sm">
-      One of three columns
-    </div>
-  </div>
+
+<div class="col-sm">
+  One of three columns
+</div>
+<div class="col-sm">
+  One of three columns
+</div>
+<div class="col-sm">
+  One of three columns
 </div>
