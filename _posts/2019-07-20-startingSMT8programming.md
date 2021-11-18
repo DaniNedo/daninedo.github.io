@@ -8,7 +8,7 @@ tags: [STM, SMT8, SMT8S SDCC, Make, C, STVP, Windows]
 comments: true
 ---
 
-I couldn't find a complete tutorial for programming STM8 on Windows, so I decided
+I couldn't find a complete tutorial for programming an STM8 on Windows, so I decided
 to write my own explaining how to setup a Windows PC to easily do so. However,
 even if you are not using Windows, you can still follow the articles to
 learn how to program an STM8, tutorials for Unix systems will be linked.
@@ -16,22 +16,22 @@ learn how to program an STM8, tutorials for Unix systems will be linked.
 Before you tell me to go and get a Unix machine, I want to say
 that at the moment of writing this article I only had my trusty Toshiba laptop running
 on Windows and didn't want to spend money on a new computer or deal with dual booting.
-Even if the Internet is pushing you to use Unix for this kind of applications,
+Even if everybody is pushing you to use Unix for this kind of applications,
 I think is fine to get the most of the tools you have in order to learn, letting
 performance and other criteria aside.
 
 ## Background
-If you are reading this I assume that you at least had some experience blinking
+If you are reading this I assume that you have at least some experience blinking
 an LED with an Arduino board and now you are looking for more exciting challenges.
 
 Arduino is a great tool to learn and it's the way I started
 microcontroller programming, but it "hides" lots of stuff from you. As you learn
-more and more about programming, you start to question how is this magic
-that links the firmware you write and the hardware works, specially when it comes
+more and more about programming, you start to question how this magic
+that links the firmware and the hardware works, specially when it comes
 to such resource-limited applications like microcontrollers.
 
 You are probably familiar with the terms _compile_ and _upload_ or _flash_ used
-in the Arduino IDE. The _compile_ function somehow processes your code an makes
+in the Arduino IDE. The _compile_ function somehow processes your code making
 it machine-understandable and as its name suggests _upload_ deploys the processed
 code to the target device. Arduino's _IDE_ stands for _Integrated Development Environment_
 and contains the tools to write, compile and upload the code.
@@ -70,20 +70,17 @@ better what is happening at the different stages of programming the microcontrol
 
 So, as listed before you will need the following software:
 - A text editor. I'm using [VS Code](https://code.visualstudio.com/), but you are free to choose.
-- [Small Device C Compiler](http://sdcc.sourceforge.net/) (SDCC)
-and [Make](https://sourceforge.net/projects/gnuwin32/).
+- [Small Device C Compiler](http://sdcc.sourceforge.net/) (SDCC).
 - [ST Visual Programmer](https://www.st.com/en/development-tools/stvp-stm32.html),
 for Unix you can use [STM8Flash](https://github.com/vdudouyt/stm8flash).
 
 ### Installing SDCC
-I said that we are going to do all this on Windows, but I lied...SDCC is GNU tool
-that with some magic help from [MINGW](http://www.mingw.org/) works on Windows as
-well (you don't have to install MINGW directly). SDCC can be downloaded
+I said that we are going to do all this on Windows, but I lied...SDCC works on Windows with the help from [MINGW](http://www.mingw.org/) (you don't have to install MINGW directly). SDCC can be downloaded
 from [here](http://sdcc.sourceforge.net/snap.php) for different OS.
 Get the latest version suitable for your machine and follow the instructions of
 the installer. After the installation you have to add SDCC to your machine's Path,
 You can check if it is correctly installed typing `SDCC --version` in the CMD, and
-you will see the version of the software.
+you will see the version of the software. Tip: [how to add to path](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
 
 ### Installing Make
 Make is not an indispensable tool, but very useful, we will see it later.
