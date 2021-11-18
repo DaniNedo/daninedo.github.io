@@ -82,14 +82,13 @@ the installer. After the installation you have to add SDCC to your machine's Pat
 You can check if it is correctly installed typing `SDCC --version` in the CMD, and
 you will see the version of the software. Tip: [how to add to path](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
-### Installing ST Visual Programmer (Windows)
+### Installing ST Visual Programmer
 This is an official flashing tool from ST and you can get it
 [here](https://www.st.com/en/development-tools/stvp-stm32.html). You might be asked
 to provide your email when downloading. It comes with a Graphical User Interface (GUI) and with a Command
 Line Interface (CLI), it took me 8 months to realize that and search for the CLI, don't repeat my mistakes... Anyway, be sure to add the folder that contains the CLI to the Path, and verify the installation typing `STVP_CmdLine -version`.
 There's also another tool from ST called [ST-LINK utility](https://www.st.com/en/development-tools/stsw-link004.html)
-but is is useful only for STM32. If you are using Unix check the [stm8sflash]
-(https://github.com/vdudouyt/stm8flash) tool.
+but is is useful only for STM32. If you are using Unix check the [stm8sflash](https://github.com/vdudouyt/stm8flash) tool.
 
 Slap yourself on the back because you successfully installed all the necessary
 software and you are ready to do some STM8 programming.
