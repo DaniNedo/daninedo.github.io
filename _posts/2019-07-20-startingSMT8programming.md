@@ -80,26 +80,13 @@ from [here](http://sdcc.sourceforge.net/snap.php) for different OS.
 Get the latest version suitable for your machine and follow the instructions of
 the installer. After the installation you have to add SDCC to your machine's Path,
 You can check if it is correctly installed typing `SDCC --version` in the CMD, and
-you will see the version of the software. Tip: [how to add to path](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+you will see the version of the software. Tip: [how to add to path](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
 
-### Installing Make
-Make is not an indispensable tool, but very useful, we will see it later.
-It is also a GNU tool, but can be downloaded from [here](http://gnuwin32.sourceforge.net/packages/make.htm).
-If you prefer to download the [complete version](https://osdn.net/projects/mingw/releases/)
-of MINGW, Make also comes with it. Unix user might have it installed already.
-Download the Installation Manager and select
-_Basic Setup_, Make will be included in the installation. I tried both options and
-both worked for me. Don't forget to add Make to the Path! Again you can check if
-all went good typing `Make --version`.
-
-### Installing ST Visual Programmer
+### Installing ST Visual Programmer (Windows)
 This is an official flashing tool from ST and you can get it
 [here](https://www.st.com/en/development-tools/stvp-stm32.html). You might be asked
-to provide your email when downloading. Even though it is called Visual Programmer
-and comes with a Graphical User Interface (GUI) it also comes with a Command
-Line Interface (CLI), it took me 8 months to realize that and search for the CLI
-in the folder, don't repeat my mistakes... Anyway, be sure to add the folder that contains
-the CLI to the Path, and verify the installation typing `STVP_CmdLine -version`.
+to provide your email when downloading. It comes with a Graphical User Interface (GUI) and with a Command
+Line Interface (CLI), it took me 8 months to realize that and search for the CLI, don't repeat my mistakes... Anyway, be sure to add the folder that contains the CLI to the Path, and verify the installation typing `STVP_CmdLine -version`.
 There's also another tool from ST called [ST-LINK utility](https://www.st.com/en/development-tools/stsw-link004.html)
 but is is useful only for STM32. If you are using Unix check the [stm8sflash]
 (https://github.com/vdudouyt/stm8flash) tool.
