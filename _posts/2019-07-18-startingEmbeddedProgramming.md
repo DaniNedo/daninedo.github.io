@@ -8,7 +8,7 @@ tags: [embedded, programming, gcc, windows, wsl, linux]
 comments: true
 ---
 
-Have you been playing with Arduino and want to step up the game? Switching to a different development environment can be intimidating, specially when you don't know what tools you need to install and how to use them. In this article we will discuss in a generic way the minimum requirements to start your embedded journey.
+Switching to a different development environment can be intimidating, specially when you don't know what tools you need to install and how to use them. In this article we will discuss in a generic way the minimum requirements to start your embedded journey.
 
 ## Background
 If you are reading this I assume that you have at least some experience blinking
