@@ -26,7 +26,8 @@ SDCC is a free open source compiler suite for many embedded targets, including o
     <li><a href="#sdcc_linuxwsl" data-toggle="tab">Linux/WSL</a></li>
     <li><a href="#sdcc_macos" data-toggle="tab">MacOS</a></li>
 </ul>
-  <div class="tab-content">
+
+<span class="tab-content">
 <div role="tabpanel" class="tab-pane active" id="sdcc_windows">
 
 To install SDCC on Windows go to the <a href="http://sdcc.sourceforge.net/snap.php#Windows">downloads page</a> and get the latest installer. Execute it and follow the instalation steps. Once the tool is installed add it to Windows PATH as shown in <a href="https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/">this tutorial</a>. The default binary directory is: <code>C:\Program Files\SDCC\bin</code>.
@@ -35,16 +36,17 @@ To install SDCC on Windows go to the <a href="http://sdcc.sourceforge.net/snap.p
 <div role="tabpanel" class="tab-pane" id="sdcc_linuxwsl">
 
 To install SDCC on Linux or Windows Subsystem for Linux (WSL) open a terminal and run:
-
-    sudo apt install sdcc
-</div>
+```
+sudo apt install sdcc
+```
+</span>
 
 <div role="tabpanel" class="tab-pane" id="sdcc_macos">
 
 To install SDCC on MacOS open a terminal and run:
 <code>brew install sdcc</code>
 </div>
-</div>
+</span>
 
 
 To install SDCC on Windows go to the [downloads page](http://sdcc.sourceforge.net/snap.php#Windows) and get the latest installer. Execute it and follow the instalation steps. Once the tool is installed add it to Windows PATH as shown in [this tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
