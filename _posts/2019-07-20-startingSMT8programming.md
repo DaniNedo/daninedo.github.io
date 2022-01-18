@@ -21,39 +21,28 @@ So, as listed before you will need the following software:
 ### Installing SDCC
 SDCC is a free open source compiler suite for many embedded targets, including our beloved STM8. The homepage can be found [here](http://sdcc.sourceforge.net/).
 
-#### Windows
-To install SDCC on Windows go to the [downloads page](http://sdcc.sourceforge.net/snap.php#Windows) and get the latest installer. Execute it and follow the instalation steps. Once the tool is installed add it to Windows PATH as shown in [this tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/). The default binary directory is: `C:\Program Files\SDCC\bin`.
-
-#### Linux, WSL
-To install SDCC on Linux or Windows Subsystem for Linux (WSL) open a terminal and run:
-```
-sudo apt install sdcc
-```
-
-#### MacOS
-To install SDCC on MacOS open a terminal and run:
-```
-brew install sdcc
-```
-
-<ul id="profileTabs" class="nav nav-tabs">
-    <li class="active"><a href="#profile" data-toggle="tab">Profile</a></li>
-    <li><a href="#about" data-toggle="tab">About</a></li>
-    <li><a href="#match" data-toggle="tab">Match</a></li>
+<ul id="sdccTabs" class="nav nav-tabs">
+    <li class="active"><a href="#sdcc_windows" data-toggle="tab">Windows</a></li>
+    <li><a href="#sdcc_linuxwsl" data-toggle="tab">Linux/WSL</a></li>
+    <li><a href="#sdcc_macos" data-toggle="tab">MacOS</a></li>
 </ul>
   <div class="tab-content">
-<div role="tabpanel" class="tab-pane active" id="profile">
-    <h2>Profile</h2>
-<p>Praesent sit amet fermentum leo....</p>
+<div role="tabpanel" class="tab-pane active" id="sdcc_windows">
+    To install SDCC on Windows go to the [downloads page](http://sdcc.sourceforge.net/snap.php#Windows) and get the latest installer. Execute it and follow the instalation steps. Once the tool is installed add it to Windows PATH as shown in [this tutorial](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/). The default binary directory is: `C:\Program Files\SDCC\bin`.
 </div>
 
-<div role="tabpanel" class="tab-pane" id="about">
-    <h2>About</h2>
-    <p>Lorem ipsum ...</p></div>
+<div role="tabpanel" class="tab-pane" id="sdcc_linuxwsl">
+    To install SDCC on Linux or Windows Subsystem for Linux (WSL) open a terminal and run:
+    ```
+    sudo apt install sdcc
+    ```
+</div>
 
-<div role="tabpanel" class="tab-pane" id="match">
-    <h2>Match</h2>
-    <p>Vel vehicula ....</p>
+<div role="tabpanel" class="tab-pane" id="sd">
+    To install SDCC on MacOS open a terminal and run:
+    ```
+    brew install sdcc
+    ```
 </div>
 </div>
 
