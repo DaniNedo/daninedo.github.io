@@ -18,7 +18,7 @@ So, as listed before you will need the following software:
 - The [Small Device C Compiler](http://sdcc.sourceforge.net/) toolchain (SDCC).
 - A flashing tool. [ST Visual Programmer](https://www.st.com/en/development-tools/stvp-stm32.html) for Windows, or [STM8Flash](https://github.com/vdudouyt/stm8flash) for Unix.
 
-### Installing SDCC
+### Installing SDCC {.tabset .tabset-fade}
 SDCC is a free open source compiler suite for many embedded targets, including our beloved STM8. The homepage can be found [here](http://sdcc.sourceforge.net/).
 
 #### Windows
@@ -35,6 +35,8 @@ To install SDCC on MacOS open a terminal and run:
 ```
 brew install sdcc
 ```
+
+###
 
 ### Installing ST Visual Programmer
 This is an official flashing tool from ST and you can get it
