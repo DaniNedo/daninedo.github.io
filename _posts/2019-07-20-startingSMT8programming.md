@@ -28,12 +28,12 @@ SDCC is a free open source compiler suite for many embedded targets, including o
 </ul>
 
 <span class="tab-content">
-<div role="tabpanel" class="tab-pane active" id="sdcc_windows">
+<span role="tabpanel" class="tab-pane active" id="sdcc_windows">
 
 To install SDCC on Windows go to the <a href="http://sdcc.sourceforge.net/snap.php#Windows">downloads page</a> and get the latest installer. Execute it and follow the instalation steps. Once the tool is installed add it to Windows PATH as shown in <a href="https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/">this tutorial</a>. The default binary directory is: <code>C:\Program Files\SDCC\bin</code>.
-</div>
+</span>
 
-<div role="tabpanel" class="tab-pane" id="sdcc_linuxwsl">
+<span role="tabpanel" class="tab-pane" id="sdcc_linuxwsl">
 
 To install SDCC on Linux or Windows Subsystem for Linux (WSL) open a terminal and run:
 ```
@@ -41,11 +41,11 @@ sudo apt install sdcc
 ```
 </span>
 
-<div role="tabpanel" class="tab-pane" id="sdcc_macos">
+<span role="tabpanel" class="tab-pane" id="sdcc_macos">
 
 To install SDCC on MacOS open a terminal and run:
 <code>brew install sdcc</code>
-</div>
+</span>
 </span>
 
 
