@@ -195,7 +195,7 @@ Now execute the following command to start the compilation:
 ```
 sdcc -mstm8 --out-fmt-ihx --std-sdcc11 main.c
 ```
-Let's analize the different parts:
+Let's analyze the different parts:
 * **-mstm8** define the microcontroller (stm8)
 * **--out-fmt-ihx** define the compiled file format (.ihx)
 * **--std-sdcc11** follow the [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision))
@@ -203,7 +203,7 @@ standard but allow some conflicts
 * **main.c** the file to be compiled
 
 {: .box-note}
-**Note:** More information about the compilation options can be found executing `sddc --help`
+**Note:** More information about the compilation options can be found executing `sdcc --help`
 or reading the [SDCC user guide](http://sdcc.sourceforge.net/doc/sdccman.pdf)
 (starting from page 26).
 

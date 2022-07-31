@@ -13,40 +13,33 @@ You will often find that tutorials rely on you using some sort of Linux flavour 
 
 When I was starting with STM8 microntrollers myself I stumbled upon this [exquisite tutorial](https://lujji.github.io/blog/bare-metal-programming-stm8/) from Lujji. These articles inspired on that tutorial and are intended to complement it. Although the author was using some tools for Unix it was really easy to comprehend what tools were needed. The approach of using independent tools for writing, compiling and flashing allows understand better what is happening at the different stages of programming the microcontrollers.
 
-So, as listed before you will need the following software:
-- A text editor. I'm using [VS Code](https://code.visualstudio.com/), but you are free to choose.
-- The [Small Device C Compiler](http://sdcc.sourceforge.net/) toolchain (SDCC).
-- A flashing tool. [ST Visual Programmer](https://www.st.com/en/development-tools/stvp-stm32.html) for Windows, or [STM8Flash](https://github.com/vdudouyt/stm8flash) for Unix.
-
 ### Installing SDCC
 SDCC is a free open source compiler suite for many embedded targets, including our beloved STM8. The homepage can be found [here](http://sdcc.sourceforge.net/).
 
 <ul id="sdccTabs" class="nav nav-tabs">
     <li class="active"><a href="#sdcc_windows" data-toggle="tab">Windows</a></li>
-    <li><a href="#sdcc_linuxwsl" data-toggle="tab">Linux/WSL</a></li>
+    <li><a href="#sdcc_wsl" data-toggle="tab">WSL</a></li>
+    <li><a href="#sdcc_linux" data-toggle="tab">Linux</a></li>
     <li><a href="#sdcc_macos" data-toggle="tab">MacOS</a></li>
 </ul>
 
 <div class="tab-content">
 <div role="tabpanel" class="tab-pane active" id="sdcc_windows">
-
-
-To install SDCC on Windows go to the <a href="http://sdcc.sourceforge.net/snap.php#Windows">downloads page</a> and get the latest installer. Execute it and follow the instalation steps. Once the tool is installed add it to Windows PATH. If you don't know how to do it follow <a href="https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/">this tutorial</a>. The default binary directory is: <code>C:\Program Files\SDCC\bin</code>.
+<p>Go to the <a href="http://sdcc.sourceforge.net/snap.php#Windows">downloads page</a> and get the latest installer. Execute it and follow the instalation steps. Once the tool is installed add it to Windows PATH. If you don't know how to do it follow <a href="https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/">this tutorial</a>. The default binary directory is: <code>C:\Program Files\SDCC\bin</code>.</p>
 </div>
 
-<div role="tabpanel" class="tab-pane" id="sdcc_linuxwsl">
+<div role="tabpanel" class="tab-pane" id="sdcc_wsl">
+<p>Open a terminal and run:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install sdcc</code></pre></div></div>
+</div>
 
-
-To install SDCC on Linux or Windows Subsystem for Linux open a terminal and run:
-
+<div role="tabpanel" class="tab-pane" id="sdcc_linux">
+<p>Open a terminal and run:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt install sdcc</code></pre></div></div>
 </div>
 
 <div role="tabpanel" class="tab-pane" id="sdcc_macos">
-
-
-To install SDCC on MacOS open a terminal and run:
-
+<p>Open a terminal and run:</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install sdcc</code></pre></div></div>
 </div>
 </div>
@@ -56,13 +49,37 @@ If everything went well, you should be able to check the SDCC version typing:
 sdcc --version
 ```
 
-### Installing ST Visual Programmer
-This is an official flashing tool from ST and you can get it
-[here](https://www.st.com/en/development-tools/stvp-stm32.html). You might be asked
-to provide your email when downloading. It comes with a Graphical User Interface (GUI) and with a Command
-Line Interface (CLI), it took me 8 months to realize that and search for the CLI, don't repeat my mistakes... Anyway, be sure to add the folder that contains the CLI to the Path, and verify the installation typing `STVP_CmdLine -version`.
-There's also another tool from ST called [ST-LINK utility](https://www.st.com/en/development-tools/stsw-link004.html)
-but is is useful only for STM32. If you are using Unix check the [stm8sflash](https://github.com/vdudouyt/stm8flash) tool.
+### Installing a flashing tool
+
+The flash tool is necessary to load the compiled binaries to the desired target.
+
+<ul id="sdccTabs" class="nav nav-tabs">
+    <li class="active"><a href="#flash_windows" data-toggle="tab">Windows</a></li>
+    <li><a href="#flash_wsl" data-toggle="tab">WSL</a></li>
+    <li><a href="#flash_linux" data-toggle="tab">Linux</a></li>
+    <li><a href="#flash_macos" data-toggle="tab">MacOS</a></li>
+</ul>
+
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane active" id="flash_windows">
+<p>ST Visual Programmer is the official ST tool for flashing devices and  comes with a Graphical User Interface (GUI) as well as with a Command Line. It can be downloaded from <a href="https://www.st.com/en/development-tools/stvp-stm32.html">here</a>, you might be asked to provide your email when downloading. Be sure to add the folder that contains the CLI to the PATH, and verify the installation typing:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>STVP_CmdLine -version</code></pre></div></div>
+</div>
+
+<div role="tabpanel" class="tab-pane" id="flash_wsl">
+<p>There is no support for USB devices on WSL (apart from USB drives and USB to Serial Converters in WSL1). Fortunately, Windows commands can be invoked from WSL as well. ST Visual Programmer is the official ST tool for flashing devices and  comes with a Graphical User Interface (GUI) as well as with a Command Line. It can be downloaded from <a href="https://www.st.com/en/development-tools/stvp-stm32.html">here</a>, you might be asked to provide your email when downloading. Be sure to add the folder that contains the CLI to the PATH, and verify the installation typing (notice the ".exe"):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>STVP_CmdLine.exe -version</code></pre></div></div>
+</div>
+
+<div role="tabpanel" class="tab-pane" id="flash_linux">
+<p>stm8flash</p>
+</div>
+
+<div role="tabpanel" class="tab-pane" id="flash_macos">
+<p>stm8flash</p>
+</div>
+</div>
+
 
 Slap yourself on the back because you successfully installed all the necessary
 software and you are ready to do some STM8 programming.

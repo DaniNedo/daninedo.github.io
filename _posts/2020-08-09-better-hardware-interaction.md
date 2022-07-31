@@ -69,7 +69,7 @@ Last time, to access the value of a specific register we used a macro that deref
 #define PB_ODR *(volatile char*)0x5005
 ```
 
-We still need the address of the registers, but now instead of defining each address individually we are only going to define the base address of each port. Notice that we only define de address and don't dereference it, we will do that later on:
+We still need the address of the registers, but now instead of defining each address individually we are only going to define the base address of each port. Notice that we only define the address and don't dereference it, we will do that later on:
 ```
 #define PA_BASE_ADDRESS     0x5000
 #define PB_BASE_ADDRESS     0x5005

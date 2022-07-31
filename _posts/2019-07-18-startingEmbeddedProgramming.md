@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Starting with Embedded Programming
-subtitle: Say hello to GCC and friends
+subtitle: Look mom, no IDE!
 gh-repo: daninedo/stm8-tutorial
 gh-badge: [star, fork, follow]
 tags: [embedded, programming, gcc, windows, wsl, linux]
@@ -42,4 +42,4 @@ Another thing that happens with IDEs is that sometimes the line between what is 
 
 Imagine you never tighten a screw and someone handles you an electrical screwdriver. You might associate that screws are tighten only by pressing the trigger switch. But what happens if now you need to use a good old manual screwdriver? Maybe the example is a bit silly, and perhaps it is just easier to use the electrical screwdriver and call it a day, but sometimes it is good to step back and learn the basics before advancing and learning more complex stuff.
 
-Overall I have nothing against IDEs and I see the value in them, when you know what you are doing they can be very convenient. However, this blog will focus mainly on standalone tools, explaining them in detail to give a better picture of what we are doing. In any case, you should use the tools that better suit you, but it is also nice to know what happens under the hood, I believe it will give you more flexibility in the long term.
+Overall I have nothing against IDEs and I see the value in them, when you know what you are doing they can be very convenient. However, this blog will focus mainly on standalone tools, explaining them in detail to give a better picture of what we are doing. In any case, you should use the tools that better suit you, but it is also nice to know what happens under the hood, I believe that it will give you more flexibility in the long term.
