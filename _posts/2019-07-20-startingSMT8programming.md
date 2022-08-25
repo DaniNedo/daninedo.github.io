@@ -22,7 +22,7 @@ We have plenty of [options](https://www.st.com/en/evaluation-tools/stm8-mcu-eval
 - 10 bit ADC
 - 16 GPIOs
 
-The board has few extra components such as a ASM1117 3.3V regulator, a reset button, a power LED and a LED connected to one of the GPIO, very convenient for developing! More information about the board can be found
+The board has few extra components such as a ASM1117 3.3V regulator, power and user LEDs and a reset button. More information about the board can be found
 [here](https://tenbaht.github.io/sduino/hardware/stm8blue/){:target="_blank"}.
 
 ![STM8s](/img/stm8s.jpg){: .center-block width="50%" :}
@@ -76,7 +76,7 @@ sdcc --version
 
 Finally we need a a flash tool, which is necessary to load the compiled binaries to the desired target.
 
-<ul id="sdccTabs" class="nav nav-tabs">
+<ul id="flashTabs" class="nav nav-tabs">
     <li class="active"><a href="#flash_windows" data-toggle="tab">Windows</a></li>
     <li><a href="#flash_wsl" data-toggle="tab">WSL</a></li>
     <li><a href="#flash_linux" data-toggle="tab">Linux</a></li>
@@ -190,7 +190,7 @@ void main() {
 }
 {% endhighlight %}
 
-Let's analyze the code line by line. The first thing we do is create a macro to easily access the contents of the required registers. We are casting the addresses, stored as a [literal]](https://www.tutorialspoint.com/cprogramming/c_constants.htm){:target="_blank"}, to a pointer of type `volatile char` and then dereferencing that pointer to access the data. We cannot directly dereference literals.
+Let's analyze the code line by line. The first thing we do is create a macro to easily access the contents of the required registers. We are casting the addresses, stored as a [literal](https://www.tutorialspoint.com/cprogramming/c_constants.htm){:target="_blank"}, to a pointer of type `volatile char` and then dereferencing that pointer to access the data. We cannot directly dereference literals.
 ```
 #define PB_ODR *(volatile char*)0x5005
 #define PB_DDR *(volatile char*)0x5007
@@ -214,77 +214,73 @@ while(1) {
 ```
 
 ## Compiling the code
-To compile the code we are going to use the SDCC from the Command Line Interface.
-Open `cmd.exe` on Windows or `bash` on Unix and navigate to the folder that contains
-your `main.c` file using `cd` and `dir` commands.
-Tip: [How to navigate in CMD](https://riptutorial.com/cmd/example/8646/navigating-in-cmd){:target="_blank"}.
-
-Now execute the following command to start the compilation:
+To compile the code we are going to use the SDCC from the Command Line Interface. Open a terminal and navigate to the folder that contains your `main.c` file using `cd` and `dir` commands. Tip: [How to navigate in CMD](https://riptutorial.com/cmd/example/8646/navigating-in-cmd){:target="_blank"}. Now execute the following command to start the compilation:
 ```
 sdcc -mstm8 --out-fmt-ihx --std-sdcc11 main.c
 ```
 Let's analyze the different parts:
 * **-mstm8** define the microcontroller (stm8)
 * **--out-fmt-ihx** define the compiled file format (.ihx)
-* **--std-sdcc11** follow the [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision))
+* **--std-sdcc11** follow the [C11](https://en.wikipedia.org/wiki/C11_(C_standard_revision){:target="_blank"})
 standard but allow some conflicts
 * **main.c** the file to be compiled
 
 {: .box-note}
-**Note:** More information about the compilation options can be found executing `sdcc --help`
-or reading the [SDCC user guide](http://sdcc.sourceforge.net/doc/sdccman.pdf)
-(starting from page 26).
+**Note:** More information about the compilation options can be found executing `sdcc --help` or reading the [SDCC user guide](http://sdcc.sourceforge.net/doc/sdccman.pdf){:target="_blank"} (starting from page 26).
 
-A few files will be generated after the compiler has done its job. For now we are
-mostly interested in the main.ihx file. The extension .ihx stands for Intel HEX and it
-contains the compiled firmware that we need to upload to the microcontroller.
+A few files will be generated after the compiler has done its job. For now we are mostly interested in the main.ihx file. The extension `.ihx` stands for Intel Hex and it contains the compiled firmware that we need to upload to the microcontroller. If you need need a `.hex` file, SDCC comes with a tool to convert `.ihx` to `.hex`:
 
-## Flashing the firmware
-If you are using stm8flash, you can simply call:
-```
-stm8flash -c stlinkv2 -p stm8s003f3 -w main.ihx
-```
-
-On the other hand, if you are using ST Visual Programmer as I do,
-it only supports .hex or motorola's .s19 extensions. The .s19 file can be automatically generated
-changing the `--out-fmt-ihx` to `--out-fmt-s19`, however I had some issues trying to flash my
-device with the .s19 file generated from SDCC. The way I found it works the best is generating
-the .ihx file as we did before and then calling:
 ```
 packihx main.ihx > main.hex
 ```
-This will generate the necessary .hex file.
 
-Next we need to physically connect our dev board to the ST-LINK like this:
+## Flashing the firmware
+Now it is time to flash our device and the first thing we need to do is to connect the STM8S blue pill to the ST-Link. We are going to use the [SWIM](https://www.st.com/resource/en/user_manual/cd00173911-stm8-swim-communication-protocol-and-debug-module-stmicroelectronics.pdf){:target="_blank"} protocol that requires only one data line. The connections will be the following:
 
 | ST-LINK | STM8 Board |
 | :------ | :---- |
 | GND | GND |
 | 3.3V | 3.3V |
 | SWIM | SWIM |
+| RST | RST |
 
-The final step is to upload our firmware to the microcontroller calling. This can be done in
-two ways:
+The next step is to load the firmware to the target. Depending on the OS we are using we will have different alternatives.
 
-#### Using the STVP GUI
-Start the GUI and go to _Configure_ -> _Configure ST Visual Programmer_, then select ST-LINK as
-_Hardware_, SWIM as _Port_, and your microcontroller model in _Device_, in my case STM8S003F3.
-Next go to _File_ -> _Open..._ and select the .hex file and finally go to _Program_ and press
-_Current Tab_. At this point the build-in LED of your board should start blinking.
+<ul id="loadTabs" class="nav nav-tabs">
+    <li class="active"><a href="#load_windows" data-toggle="tab">Windows</a></li>
+    <li><a href="#load_wsl" data-toggle="tab">WSL</a></li>
+    <li><a href="#load_linux" data-toggle="tab">Linux</a></li>
+    <li><a href="#load_macos" data-toggle="tab">MacOS</a></li>
+</ul>
 
-#### Using the STVP_CmdLine
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane active" id="load_windows">
+<p>If you are using windows we have two options, either use the GUI or the Command Line Tool.</p>
+<h4>Using the STVP GUI</h4>
+<p>Start the GUI and go to <i>Configure</i> -> <i>Configure ST Visual Programmer</i>, then select ST-LINK as
+<i>Hardware</i>, SWIM as <i>Port</i>, and your microcontroller model in <i>Device</i>, in my case STM8S003F3.
+Next go to <i>File</i> -> <i>Open...</i> and select the .hex file and finally go to <i>Program</i> and press
+<i>Current Tab</i>. At this point the build-in LED of your board should start blinking.</p>
+<h4>Using the STVP_CmdLine</h4>
 Open the CMD and again make sure that you are in the project folder, then execute:
-```
-STVP_CmdLine -Device=STM8S003F3 -FileProg=main.hex
-```
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>STVP_CmdLine -Device=STM8S003F3 -no_log -no_loop -FileProg=main.ihx</code></pre></div></div>
+</div>
 
-In reality we are executing the following:
-```
-STVP_CmdLine -BoardName=ST-LINK -Port=USB -ProgMode=SWIM -Device=STM8S003F3
--FileProg=main.hex
-```
-These flags are the default ones and they have the proper settings for our case.
-Probably there are a couple more, but I think those are the most relevant.
+<div role="tabpanel" class="tab-pane" id="load_wsl">
+<p>Open a terminal and run (Notice the <code>.exe</code>):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>STVP_CmdLine.exe -Device=STM8S003F3 -no_log -no_loop -FileProg=main.ihx</code></pre></div></div>
+</div>
 
-{: .box-note}
-**Note:** The flag names are self explanatory, but if you want to know more call `STVP_CmdLine -help`
+<div role="tabpanel" class="tab-pane" id="load_linux">
+<p>If you are using stm8flash, you can simply call:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stm8flash -c stlinkv2 -p stm8s003f3 -w main.ihx</code></pre></div></div>
+</div>
+
+<div role="tabpanel" class="tab-pane" id="load_macos">
+<p>If you are using stm8flash, you can simply call:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stm8flash -c stlinkv2 -p stm8s003f3 -w main.ihx</code></pre></div></div>
+</div>
+
+</div>
+
+And that is it! You should have your LED flashing.
