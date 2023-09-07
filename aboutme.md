@@ -4,13 +4,8 @@ title: About me
 #subtitle: Why you'd want to go on a date with me
 ---
 
-My name is Daniel.
-
-Currently I'm doing my Master's Degree in Industrial Engineering and working as
-a Hardware & Firmware Engineer.
-
-When I have free time I like to make my own personal projects to learn and
-discover new things.
+My name is Daniel and I'm currently working as an embedded systems engineer.
+When I have free time I like to make my own personal projects to learn and discover new things.
 
 ### Why I'm writing this blog?
 
